@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+<div class="container py-5 mb-5">
+    <h1>{{object}}</h1>
+    <hr>
+    <div class="col-md-4">
+        <p>Computer Type: {{object.computer_type}}</p>
+        <p>Maker: {{object.maker}}</p>
+        <p>Processor: {{object.processor}}</p>
+        <p>RAM: {{object.ram}} GB</p>
+        <p>Storage: {{object.hdd}} GB</p>
+        <hr>
+        <p>Computers</p>
+        <ol>
+            {% for computer in object.computers.all %}
+            <li><a href="">{{computer}}</a></li>
+            {% endfor %}
+        </ol>
+    </div>
+</div>
+{% endblock content %}

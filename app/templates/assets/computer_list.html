@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+<div class="container py-5 mb-5">
+    <h1>Computer List</h1>
+    <hr>
+    <div class="text-end">
+        <a href="{% url 'computer-create' %}">
+            <span class="text-success material-symbols-outlined">
+                add_box
+            </span>
+        </a>
+    </div>
+    <ol>
+        {% for computer in object_list %}
+        <li> <a href="#">{{computer}}</a></li>
+        {% endfor %}
+    </ol>
+</div>
+
+{% endblock content %}
