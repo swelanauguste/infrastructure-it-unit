@@ -8,6 +8,7 @@ from .models import (
     Printer,
     PrinterModel,
     Status,
+    OperatingSystem
 )
 
 admin.site.register(ComputerType)
@@ -17,3 +18,4 @@ admin.site.register(ComputerModel)
 admin.site.register(Computer)
 admin.site.register(PrinterModel)
 admin.site.register(Printer)
+admin.site.register(OperatingSystem)
