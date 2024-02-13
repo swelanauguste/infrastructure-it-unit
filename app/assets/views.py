@@ -7,13 +7,23 @@ from django.views.generic import (
     UpdateView,
 )
 
-from .models import Computer, ComputerModel, ComputerType, Maker, Status
+from .models import (
+    Computer,
+    ComputerModel,
+    ComputerType,
+    Maker,
+    Printer,
+    PrinterModel,
+    Status,
+)
 
 
 def inventory_view(request):
     context = {
-        "computer_list": Computer.objects.all(),
-        "computer_model_list": ComputerModel.objects.all(),
+        "computers": Computer.objects.all(),
+        "computer_models": ComputerModel.objects.all(),
+        "printers": Printer.objects.all(),
+        "printer_models": PrinterModel.objects.all(),
     }
     return render(request, "assets/inventory.html", context)
 
@@ -34,3 +44,21 @@ class ComputerDetailView(DetailView):
 
 class ComputerModelDetailView(DetailView):
     model = ComputerModel
+
+
+class PrinterCreateView(CreateView):
+    model = Printer
+    fields = "__all__"
+
+
+class PrinterModelCreateView(CreateView):
+    model = PrinterModel
+    fields = "__all__"
+
+
+class PrinterDetailView(DetailView):
+    model = Printer
+
+
+class PrinterModelDetailView(DetailView):
+    model = PrinterModel

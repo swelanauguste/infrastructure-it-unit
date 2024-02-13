@@ -4,44 +4,80 @@
 {% block content %}
 <div class="container py-5 mb-5">
     <div class="row">
-        <div class="col">
-            <h1>Computers</h1>
-            <hr>
-            <div class="text-end">
-                <a href="{% url 'computer-create' %}">
-                    <span class="text-success material-symbols-outlined">
-                        add_box
-                    </span>
-                </a>
-            </div>
-            <ol>
-                {% for computer in computer_list %}
-                <li> <a
-                        href="{% url 'computer-detail' computer.pk %}">{{computer}}</a>
-                </li>
-                {% endfor %}
-            </ol>
+        <h1>Computers</h1>
+        <hr>
+        <div class="text-end">
+            <a href="{% url 'computer-create' %}">
+                <span class="text-success material-symbols-outlined">
+                    add_box
+                </span>
+            </a>
         </div>
-        <div class="col">
-            <h1>Models</h1>
-            <hr>
-            <div class="text-end">
-                <a href="{% url 'computer-model-create' %}">
-                    <span class="text-success material-symbols-outlined">
-                        add_box
-                    </span>
-                </a>
-            </div>
-            <ol>
-                {% for model in computer_model_list %}
-                <li> <a
-                        href="{% url 'computer-model-detail' model.pk %}">{{model}}</a>
-                </li>
-                {% endfor %}
-            </ol>
-        </div>
+        <ol>
+            {% for computer in computers %}
+            <li> <a
+                    href="{% url 'computer-detail' computer.pk %}">{{computer}}</a>
+            </li>
+            {% endfor %}
+        </ol>
     </div>
-
+    <br>
+    <div class="row">
+        <h1>Computer models</h1>
+        <hr>
+        <div class="text-end">
+            <a href="{% url 'computer-model-create' %}">
+                <span class="text-success material-symbols-outlined">
+                    add_box
+                </span>
+            </a>
+        </div>
+        <ol>
+            {% for model in computer_models %}
+            <li> <a
+                    href="{% url 'computer-model-detail' model.pk %}">{{model}}</a>
+            </li>
+            {% endfor %}
+        </ol>
+    </div>
+    <br>
+    <div class="row">
+        <h1>Printers</h1>
+        <hr>
+        <div class="text-end">
+            <a href="{% url 'printer-create' %}">
+                <span class="text-success material-symbols-outlined">
+                    add_box
+                </span>
+            </a>
+        </div>
+        <ol>
+            {% for printer in printers %}
+            <li> <a
+                    href="{% url 'printer-detail' printer.pk %}">{{printer}}</a>
+            </li>
+            {% endfor %}
+        </ol>
+    </div>
+    <br>
+    <div class="row">
+        <h1>Printer models</h1>
+        <hr>
+        <div class="text-end">
+            <a href="{% url 'printer-model-create' %}">
+                <span class="text-success material-symbols-outlined">
+                    add_box
+                </span>
+            </a>
+        </div>
+        <ol>
+            {% for model in printer_models %}
+            <li> <a
+                    href="{% url 'printer-model-detail' model.pk %}">{{model}}</a>
+            </li>
+            {% endfor %}
+        </ol>
+    </div>
 </div>
 
 {% endblock content %}

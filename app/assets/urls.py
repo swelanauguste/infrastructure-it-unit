@@ -5,6 +5,10 @@ from .views import (
     ComputerDetailView,
     ComputerModelCreateView,
     ComputerModelDetailView,
+    PrinterCreateView,
+    PrinterDetailView,
+    PrinterModelCreateView,
+    PrinterModelDetailView,
     inventory_view,
 )
 
@@ -25,5 +29,21 @@ urlpatterns = [
         "add/computer-model/",
         ComputerModelCreateView.as_view(),
         name="computer-model-create",
+    ),
+    path(
+        "printer/detail/<int:pk>/",
+        PrinterDetailView.as_view(),
+        name="printer-detail",
+    ),
+    path("add/printer/", PrinterCreateView.as_view(), name="printer-create"),
+    path(
+        "printer-model/detail/<int:pk>/",
+        PrinterModelDetailView.as_view(),
+        name="printer-model-detail",
+    ),
+    path(
+        "add/printer-model/",
+        PrinterModelCreateView.as_view(),
+        name="printer-model-create",
     ),
 ]

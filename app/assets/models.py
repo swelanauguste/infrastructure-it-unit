@@ -1,4 +1,5 @@
 from django.db import models
+from django.shortcuts import reverse
 
 
 class ComputerType(models.Model):
@@ -18,6 +19,9 @@ class Maker(models.Model):
 class Status(models.Model):
     name = models.CharField(max_length=100)
 
+    class Meta:
+        verbose_name_plural = "Statuses"
+
     def __str__(self):
         return self.name
 
@@ -32,15 +36,20 @@ class ComputerModel(models.Model):
     ram = models.IntegerField("RAM", help_text="In GB")
     hdd = models.IntegerField("HDD/Storage", help_text="In GB")
 
+    def get_absolute_url(self):
+        return reverse("computer-model-detail", kwargs={"pk": self.pk})
+
     def __str__(self):
-        return self.name
+        return f"{self.maker} - {self.name}"
 
 
 class Computer(models.Model):
     serial_number = models.CharField(max_length=100, blank=True, null=True)
     computer_name = models.CharField(max_length=100, blank=True, null=True)
-    model = models.ForeignKey(ComputerModel, on_delete=models.CASCADE, related_name="computers")
-    location = models.CharField(max_length=100)
+    model = models.ForeignKey(
+        ComputerModel, on_delete=models.CASCADE, related_name="computers"
+    )
+    location = models.CharField(max_length=100, blank=True, null=True)
     ip_addr = models.GenericIPAddressField(blank=True, null=True)
     dept = models.CharField(max_length=100, blank=True, null=True)
     user = models.CharField(max_length=100, blank=True, null=True)
@@ -49,5 +58,40 @@ class Computer(models.Model):
     date_installed = models.DateField(blank=True, null=True)
     warranty_info = models.CharField(max_length=100)
 
+    def get_absolute_url(self):
+        return reverse("computer-detail", kwargs={"pk": self.pk})
+
     def __str__(self):
         return self.serial_number
+
+
+class PrinterModel(models.Model):
+    name = models.CharField(max_length=100)
+    maker = models.ForeignKey(Maker, on_delete=models.CASCADE)
+
+    def get_absolute_url(self):
+        return reverse("printer-model-detail", kwargs={"pk": self.pk})
+
+    def __str__(self):
+        return f"{self.maker} - {self.name}"
+
+
+class Printer(models.Model):
+    serial_number = models.CharField(max_length=100, blank=True, null=True)
+    printer_name = models.CharField(max_length=100, blank=True, null=True)
+    model = models.ForeignKey(
+        PrinterModel, on_delete=models.CASCADE, related_name="printers"
+    )
+    location = models.CharField(max_length=100, null=True, blank=True)
+    ip_addr = models.GenericIPAddressField(blank=True, null=True)
+    dept = models.CharField(max_length=100, blank=True, null=True)
+    status = models.ForeignKey(Status, on_delete=models.CASCADE)
+    date_received = models.DateField(blank=True, null=True)
+    date_installed = models.DateField(blank=True, null=True)
+    warranty_info = models.CharField(max_length=100)
+
+    def get_absolute_url(self):
+        return reverse("printer-detail", kwargs={"pk": self.pk})
+
+    def __str__(self):
+        return f"{self.ip_addr} - {self.model.name}"
