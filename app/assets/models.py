@@ -43,11 +43,25 @@ class ComputerModel(models.Model):
         return f"{self.maker} - {self.name}"
 
 
+class OperatingSystem(models.Model):
+    name = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.name
+
+
 class Computer(models.Model):
     serial_number = models.CharField(max_length=100, blank=True, null=True)
     computer_name = models.CharField(max_length=100, blank=True, null=True)
     model = models.ForeignKey(
         ComputerModel, on_delete=models.CASCADE, related_name="computers"
+    )
+    os = models.ForeignKey(
+        OperatingSystem,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        verbose_name="Operating System",
     )
     location = models.CharField(max_length=100, blank=True, null=True)
     ip_addr = models.GenericIPAddressField(blank=True, null=True)
