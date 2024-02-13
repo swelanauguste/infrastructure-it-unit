@@ -64,13 +64,14 @@ class Computer(models.Model):
         verbose_name="Operating System",
     )
     location = models.CharField(max_length=100, blank=True, null=True)
-    ip_addr = models.GenericIPAddressField(blank=True, null=True)
+    ip_addr = models.GenericIPAddressField("IP Address", blank=True, null=True)
     dept = models.CharField(max_length=100, blank=True, null=True)
     user = models.CharField(max_length=100, blank=True, null=True)
     status = models.ForeignKey(Status, on_delete=models.CASCADE)
     date_received = models.DateField(blank=True, null=True)
     date_installed = models.DateField(blank=True, null=True)
     warranty_info = models.CharField(max_length=100)
+    file = models.FileField(upload_to="system_audit/", blank=True, null=True)
 
     def get_absolute_url(self):
         return reverse("computer-detail", kwargs={"pk": self.pk})
