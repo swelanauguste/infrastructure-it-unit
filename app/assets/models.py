@@ -111,7 +111,9 @@ class Computer(models.Model):
         return reverse("computer-detail", kwargs={"pk": self.pk})
 
     def __str__(self):
-        return self.serial_number
+        if self.serial_number:
+            return self.serial_number
+        return f"N/A"
 
 
 class PrinterModel(models.Model):
