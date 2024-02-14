@@ -22,8 +22,9 @@
         </div>
         <ol>
             {% for computer in computers %}
-            <li> <a
-                    href="{% url 'computer-detail' computer.pk %}">{{computer}}</a>
+            <li> <a class="text-dark"
+                    href="{% url 'computer-detail' computer.pk %}">{{computer|upper}}
+                    - {{computer.dept|upper}} - {{computer.status|upper}}</a>
             </li>
             {% endfor %}
         </ol>
@@ -41,7 +42,7 @@
         </div>
         <ol>
             {% for model in computer_models %}
-            <li> <a
+            <li> <a class="text-dark"
                     href="{% url 'computer-model-detail' model.pk %}">{{model}}</a>
             </li>
             {% endfor %}
@@ -60,7 +61,7 @@
         </div>
         <ol>
             {% for printer in printers %}
-            <li> <a
+            <li> <a class="text-dark"
                     href="{% url 'printer-detail' printer.pk %}">{{printer}}</a>
             </li>
             {% endfor %}
@@ -79,7 +80,7 @@
         </div>
         <ol>
             {% for model in printer_models %}
-            <li> <a
+            <li> <a class="text-dark"
                     href="{% url 'printer-model-detail' model.pk %}">{{model}}</a>
             </li>
             {% endfor %}
@@ -98,7 +99,7 @@
         </div>
         <ol>
             {% for monitor in monitors %}
-            <li> <a
+            <li> <a class="text-dark"
                     href="{% url 'monitor-detail' monitor.pk %}">{{monitor}}</a>
             </li>
             {% endfor %}
@@ -117,7 +118,7 @@
         </div>
         <ol>
             {% for model in monitor_models %}
-            <li> <a
+            <li> <a class="text-dark"
                     href="{% url 'monitor-model-detail' model.pk %}">{{model}}</a>
             </li>
             {% endfor %}
