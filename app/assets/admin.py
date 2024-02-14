@@ -5,10 +5,12 @@ from .models import (
     ComputerModel,
     ComputerType,
     Maker,
+    Monitor,
+    MonitorModel,
+    OperatingSystem,
     Printer,
     PrinterModel,
     Status,
-    OperatingSystem
 )
 
 admin.site.register(ComputerType)
@@ -19,3 +21,5 @@ admin.site.register(Computer)
 admin.site.register(PrinterModel)
 admin.site.register(Printer)
 admin.site.register(OperatingSystem)
+admin.site.register(MonitorModel)
+admin.site.register(Monitor)

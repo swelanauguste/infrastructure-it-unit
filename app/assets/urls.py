@@ -5,10 +5,20 @@ from .views import (
     ComputerDetailView,
     ComputerModelCreateView,
     ComputerModelDetailView,
+    ComputerModelUpdateView,
+    ComputerUpdateView,
+    MonitorCreateView,
+    MonitorDetailView,
+    MonitorModelCreateView,
+    MonitorModelDetailView,
+    MonitorModelUpdateView,
+    MonitorUpdateView,
     PrinterCreateView,
     PrinterDetailView,
     PrinterModelCreateView,
     PrinterModelDetailView,
+    PrinterModelUpdateView,
+    PrinterUpdateView,
     inventory_view,
 )
 
@@ -19,11 +29,21 @@ urlpatterns = [
         ComputerDetailView.as_view(),
         name="computer-detail",
     ),
+    path(
+        "computer/update/<int:pk>/",
+        ComputerUpdateView.as_view(),
+        name="computer-update",
+    ),
     path("add/computer/", ComputerCreateView.as_view(), name="computer-create"),
     path(
         "computer-model/detail/<int:pk>/",
         ComputerModelDetailView.as_view(),
         name="computer-model-detail",
+    ),
+    path(
+        "computer-model/update/<int:pk>/",
+        ComputerModelUpdateView.as_view(),
+        name="computer-model-update",
     ),
     path(
         "add/computer-model/",
@@ -35,6 +55,11 @@ urlpatterns = [
         PrinterDetailView.as_view(),
         name="printer-detail",
     ),
+    path(
+        "printer/update/<int:pk>/",
+        PrinterUpdateView.as_view(),
+        name="printer-update",
+    ),
     path("add/printer/", PrinterCreateView.as_view(), name="printer-create"),
     path(
         "printer-model/detail/<int:pk>/",
@@ -42,8 +67,39 @@ urlpatterns = [
         name="printer-model-detail",
     ),
     path(
+        "printer-model/update/<int:pk>/",
+        PrinterModelUpdateView.as_view(),
+        name="printer-model-update",
+    ),
+    path(
         "add/printer-model/",
         PrinterModelCreateView.as_view(),
         name="printer-model-create",
+    ),
+    path(
+        "monitor/detail/<int:pk>/",
+        MonitorDetailView.as_view(),
+        name="monitor-detail",
+    ),
+    path(
+        "monitor/update/<int:pk>/",
+        MonitorUpdateView.as_view(),
+        name="monitor-update",
+    ),
+    path("add/monitor/", MonitorCreateView.as_view(), name="monitor-create"),
+    path(
+        "monitor-model/detail/<int:pk>/",
+        MonitorModelDetailView.as_view(),
+        name="monitor-model-detail",
+    ),
+    path(
+        "monitor-model/update/<int:pk>/",
+        MonitorModelUpdateView.as_view(),
+        name="monitor-model-update",
+    ),
+    path(
+        "add/monitor-model/",
+        MonitorModelCreateView.as_view(),
+        name="monitor-model-create",
     ),
 ]

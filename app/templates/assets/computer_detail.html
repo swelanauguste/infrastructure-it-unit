@@ -8,7 +8,8 @@
     <div class="row">
         <div class="col-md-4">
             <p>Computer name: {{object.computer_name}}</p>
-            <p>Model: {{object.model}}</p>
+            <p>Model: <a href="{{object.model.get_absolute_url}}">
+                    {{object.model}}</a></p>
             <p>Location: {{object.location}}</p>
             <p>IP Address: {{object.ip_addr}}</p>
             <p>Dept: {{object.dept}}</p>
@@ -17,6 +18,11 @@
             <p>Received: {{object.date_received}}</p>
             <p>Installed: {{object.date_installed}}</p>
             <p>Warranty: {{object.warranty_info}}</p>
+            {% if object.image %}
+            <a class="text-dark"
+                target="_new"
+                href="{{object.image.url}}">BELARC</a>
+            {% endif %}
         </div>
         <div class="col-md-4">
             <p>Serial Number: {{object.serial_number}}</p>
@@ -24,12 +30,15 @@
             <p>RAM: {{object.model.ram}} GB</p>
             <p>HDD: {{object.model.hdd}} GB</p>
             <p>OS: {{object.os}}</p>
-            <p>Monitor: {{object.monitor}}</p>
+            {% for monitor in object.monitor.all %}
+            <p>Monitor: {{monitor}}</p>
+            {% endfor %}
             <p>Keyboard: {{object.keyboard}}</p>
             <p>Mouse: {{object.mouse}}</p>
-            <p>Power Supply: {{object.power_supply}}</p>
-            <p>Cooling: {{object.cooling}}</p>
-            <p>Network: {{object.network}}</p>
+        </div>
+        <div class="text-end">
+            <a class="text-dark"
+                href="{% url 'computer-update' object.pk %}">Edit</a>
         </div>
     </div>
 </div>

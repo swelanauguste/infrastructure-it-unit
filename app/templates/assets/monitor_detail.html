@@ -8,18 +8,14 @@
     <div class="row">
         <div class="col-md-4">
             <p>Serial Number: {{object.serial_number}}</p>
-            <p>Printer name: {{object.computer_name}}</p>
+            <p>Monitor name: {{object.computer_name}}</p>
             <p>Model: <a
                     href="{{object.model.get_absolute_url}}">{{object.model}}</a>
             </p>
             <p>Location: {{object.location}}</p>
-            <p><a target="_blank"
-                    href="http://{{object.ip_addr}}/">IP Address:
-                    {{object.ip_addr}}</a></p>
             <p>Dept: {{object.dept}}</p>
         </div>
         <div class="col-md-4">
-            <p>Power Supply: {{object.power_supply}}</p>
             <p>Status: {{object.status}}</p>
             <p>Received: {{object.date_received}}</p>
             <p>Installed: {{object.date_installed}}</p>
@@ -27,7 +23,7 @@
         </div>
         <div class="text-end">
             <a class="text-dark"
-                href="{% url 'printer-update' object.pk %}">Edit</a>
+                href="{% url 'monitor-update' object.pk %}">Edit</a>
         </div>
     </div>
 </div>

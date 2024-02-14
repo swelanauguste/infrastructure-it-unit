@@ -50,12 +50,45 @@ class OperatingSystem(models.Model):
         return self.name
 
 
+class MonitorModel(models.Model):
+    name = models.CharField(max_length=100)
+    maker = models.ForeignKey(Maker, on_delete=models.CASCADE)
+    image = models.FileField(upload_to="monitor_models/", blank=True, null=True)
+
+    def get_absolute_url(self):
+        return reverse("monitor-model-detail", kwargs={"pk": self.pk})
+
+    def __str__(self):
+        return f"{self.maker} - {self.name}"
+
+
+class Monitor(models.Model):
+    serial_number = models.CharField(max_length=100, blank=True, null=True)
+    monitor_name = models.CharField(max_length=100, blank=True, null=True)
+    model = models.ForeignKey(
+        MonitorModel, on_delete=models.CASCADE, related_name="monitors"
+    )
+    location = models.CharField(max_length=100, null=True, blank=True)
+    dept = models.CharField(max_length=100, blank=True, null=True)
+    status = models.ForeignKey(Status, on_delete=models.CASCADE)
+    date_received = models.DateField(blank=True, null=True)
+    date_installed = models.DateField(blank=True, null=True)
+    notes = models.TextField(blank=True, null=True, help_text="Warranty Information")
+
+    def get_absolute_url(self):
+        return reverse("monitor-detail", kwargs={"pk": self.pk})
+
+    def __str__(self):
+        return f"{self.model.name} - {self.dept}"
+
+
 class Computer(models.Model):
     serial_number = models.CharField(max_length=100, blank=True, null=True)
     computer_name = models.CharField(max_length=100, blank=True, null=True)
     model = models.ForeignKey(
         ComputerModel, on_delete=models.CASCADE, related_name="computers"
     )
+    monitor = models.ManyToManyField(Monitor, related_name="monitors")
     os = models.ForeignKey(
         OperatingSystem,
         on_delete=models.SET_NULL,
@@ -71,7 +104,8 @@ class Computer(models.Model):
     date_received = models.DateField(blank=True, null=True)
     date_installed = models.DateField(blank=True, null=True)
     warranty_info = models.CharField(max_length=100)
-    file = models.FileField(upload_to="system_audit/", blank=True, null=True)
+    image = models.FileField(upload_to="system_audit/", blank=True, null=True)
+    notes = models.TextField(blank=True, null=True)
 
     def get_absolute_url(self):
         return reverse("computer-detail", kwargs={"pk": self.pk})
@@ -83,6 +117,7 @@ class Computer(models.Model):
 class PrinterModel(models.Model):
     name = models.CharField(max_length=100)
     maker = models.ForeignKey(Maker, on_delete=models.CASCADE)
+    image = models.FileField(upload_to="printer_models/", blank=True, null=True)
 
     def get_absolute_url(self):
         return reverse("printer-model-detail", kwargs={"pk": self.pk})
@@ -103,7 +138,7 @@ class Printer(models.Model):
     status = models.ForeignKey(Status, on_delete=models.CASCADE)
     date_received = models.DateField(blank=True, null=True)
     date_installed = models.DateField(blank=True, null=True)
-    warranty_info = models.CharField(max_length=100)
+    notes = models.TextField(blank=True, null=True)
 
     def get_absolute_url(self):
         return reverse("printer-detail", kwargs={"pk": self.pk})

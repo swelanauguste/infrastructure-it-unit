@@ -11,11 +11,15 @@
         <p>Processor: {{object.processor}}</p>
         <p>RAM: {{object.ram}} GB</p>
         <p>Storage: {{object.hdd}} GB</p>
+        <div class="text-end">
+            <a class="text-dark"
+                href="{% url 'computer-model-update' object.pk %}">Edit</a>
+        </div>
         <hr>
         <p>Computers</p>
         <ol>
             {% for computer in object.computers.all %}
-            <li><a href="">{{computer}}</a></li>
+            <li><a href="{{computer.get_absolute_url}}">{{computer}}</a></li>
             {% endfor %}
         </ol>
     </div>
