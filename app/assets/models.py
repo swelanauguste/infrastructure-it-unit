@@ -88,7 +88,7 @@ class Computer(models.Model):
     model = models.ForeignKey(
         ComputerModel, on_delete=models.CASCADE, related_name="computers"
     )
-    monitor = models.ManyToManyField(Monitor, related_name="monitors")
+    monitor = models.ManyToManyField(Monitor, related_name="monitors", blank=True)
     os = models.ForeignKey(
         OperatingSystem,
         on_delete=models.SET_NULL,
