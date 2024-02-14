@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+
+
+{% block content %}
+<div class="container py-5 mb-5">
+    <h1>{{object}}</h1>
+    <hr>
+    <div class="row">
+        <ul>
+            <li>Name: {{object.name}}</li>
+            <li>Email: {{object.email}}</li>
+            <li>Phone: {{object.phone}}</li>
+            <li>Address: {{object.address}}</li>
+            <li>City: {{object.city}}</li>
+        </ul>
+        <div class="text-end">
+            <a href="{% url 'customer-update' object.id %}"
+                class="text-dark">Edit</a>
+        </div>
+    </div>
+</div>
+{% endblock content %}

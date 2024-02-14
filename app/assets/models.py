@@ -1,3 +1,4 @@
+from customers.models import Customer, Department
 from django.db import models
 from django.shortcuts import reverse
 
@@ -25,6 +26,7 @@ class Status(models.Model):
 
 class OperatingSystem(models.Model):
     name = models.CharField(max_length=100)
+
     class Meta:
         ordering = ["name"]
 
@@ -36,7 +38,7 @@ class MonitorModel(models.Model):
     name = models.CharField(max_length=100)
     maker = models.ForeignKey(Maker, on_delete=models.CASCADE)
     image = models.FileField(upload_to="monitor_models/", blank=True, null=True)
-    
+
     class Meta:
         ordering = ["name"]
 
@@ -141,7 +143,7 @@ class PrinterModel(models.Model):
     name = models.CharField(max_length=100)
     maker = models.ForeignKey(Maker, on_delete=models.CASCADE)
     image = models.FileField(upload_to="printer_models/", blank=True, null=True)
-    
+
     class Meta:
         ordering = ["name"]
 
@@ -165,7 +167,7 @@ class Printer(models.Model):
     date_received = models.DateField(blank=True, null=True)
     date_installed = models.DateField(blank=True, null=True)
     notes = models.TextField(blank=True, null=True)
-    
+
     class Meta:
         ordering = ["ip_addr"]
 

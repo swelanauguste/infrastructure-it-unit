@@ -7,6 +7,7 @@ from django.views.generic import (
     UpdateView,
 )
 
+from .forms import ComputerForm, MonitorForm, PrinterForm
 from .models import (
     Computer,
     ComputerModel,
@@ -34,12 +35,13 @@ def inventory_view(request):
 
 class ComputerCreateView(CreateView):
     model = Computer
-    fields = "__all__"
+    form_class = ComputerForm
 
 
 class ComputerUpdateView(UpdateView):
     model = Computer
-    fields = "__all__"
+    form_class = ComputerForm
+
 
 
 class ComputerModelCreateView(CreateView):
@@ -62,12 +64,13 @@ class ComputerModelDetailView(DetailView):
 
 class PrinterCreateView(CreateView):
     model = Printer
-    fields = "__all__"
+    form_class = PrinterForm
 
 
 class PrinterUpdateView(UpdateView):
     model = Printer
-    fields = "__all__"
+    form_class = PrinterForm
+
 
 
 class PrinterModelCreateView(CreateView):
@@ -90,12 +93,12 @@ class PrinterModelDetailView(DetailView):
 
 class MonitorCreateView(CreateView):
     model = Monitor
-    fields = "__all__"
+    form = MonitorForm
 
 
 class MonitorUpdateView(UpdateView):
     model = Monitor
-    fields = "__all__"
+    form_class = MonitorForm
 
 
 class MonitorModelCreateView(CreateView):

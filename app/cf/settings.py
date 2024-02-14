@@ -29,6 +29,8 @@ INSTALLED_APPS = [
     "crispy_forms",
     "crispy_bootstrap5",
     "assets",
+    "tickets",
+    "customers",
 ]
 
 MIDDLEWARE = [

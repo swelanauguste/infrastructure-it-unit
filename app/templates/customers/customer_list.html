@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+<div class="container py-5 mb-5">
+    <h1>Customers</h1>
+    <div class="text-end">
+        <a href="{% url 'customer-create' %}">
+            <span class="text-success material-symbols-outlined">
+                add_box
+            </span>
+        </a>
+    </div>
+    <hr>
+    <div class="table-responsive">
+        <table class="table table-sm table-hover">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">name</th>
+                    <th scope="col">email</th>
+                    <th scope="col">ext</th>
+                    <th scope="col">department</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for customer in object_list %}
+                <tr>
+                    <th scope="row">{{forloop.counter}}</th>
+                    <td><a class="text-dark"
+                            href="{{customer.get_absolute_url}}">{{customer.name}}</a>
+                    </td>
+                    <td><a class="text-dark"
+                            href="mailto:{{customer.email}}">{{customer.email}}</a>
+                    </td>
+                    <td>{{customer.ext}}</td>
+                    <td>{{customer.department}}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock content %}
