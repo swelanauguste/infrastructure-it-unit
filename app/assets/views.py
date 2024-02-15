@@ -43,7 +43,6 @@ class ComputerUpdateView(UpdateView):
     form_class = ComputerForm
 
 
-
 class ComputerModelCreateView(CreateView):
     model = ComputerModel
     fields = "__all__"
@@ -72,7 +71,6 @@ class PrinterUpdateView(UpdateView):
     form_class = PrinterForm
 
 
-
 class PrinterModelCreateView(CreateView):
     model = PrinterModel
     fields = "__all__"
@@ -93,7 +91,7 @@ class PrinterModelDetailView(DetailView):
 
 class MonitorCreateView(CreateView):
     model = Monitor
-    form = MonitorForm
+    form_class = MonitorForm
 
 
 class MonitorUpdateView(UpdateView):
