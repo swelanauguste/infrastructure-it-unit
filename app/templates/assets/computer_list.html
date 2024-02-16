@@ -25,7 +25,6 @@
     <br>
     <section>
 
-        {% if page_obj.has_next %}
         <div class="pagination">
             <span class="step-links">
                 {% if page_obj.has_previous %}
@@ -35,7 +34,7 @@
                 {% endif %}
 
                 <span class="current">
-                    Page {{ page_obj.number }} of 
+                    Page {{ page_obj.number }} of
                     {{ page_obj.paginator.num_pages }}.
                 </span>
 
@@ -46,7 +45,6 @@
                 {% endif %}
             </span>
         </div>
-        {% endif %}
 
         <div class="table-responsive px-5">
             <table class="table table-sm small">
@@ -81,7 +79,6 @@
                 </tbody>
             </table>
         </div>
-        {% if page_obj.has_next %}
         <div class="pagination">
             <span class="step-links">
                 {% if page_obj.has_previous %}
@@ -91,7 +88,7 @@
                 {% endif %}
 
                 <span class="current">
-                    Page {{ page_obj.number }} of 
+                    Page {{ page_obj.number }} of
                     {{ page_obj.paginator.num_pages }}.
                 </span>
 
@@ -102,7 +99,6 @@
                 {% endif %}
             </span>
         </div>
-        {% endif %}
     </section>
 </div>
 
