@@ -35,9 +35,11 @@
             {% endfor %}
             <p>Keyboard: {{object.keyboard}}</p>
             <p>Mouse: {{object.mouse}}</p>
+            <p>{{object.notes}}</p>
+
         </div>
-        <div class="text-end">
-            <a class="text-dark"
+        <div class="text-end py-3">
+            <a class="btn btn-dark"
                 href="{% url 'computer-update' object.pk %}">Edit</a>
         </div>
     </div>
