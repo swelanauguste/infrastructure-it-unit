@@ -2,7 +2,7 @@
 
 
 {% block content %}
-<div class="container py-5 mb-5">
+<div class="p-5 mb-5">
     <h1>Printer models</h1>
     <hr>
     <div class="text-end">
@@ -30,7 +30,6 @@
                     <tr>
                         <th scope="col">#</th>
                         <th scope="col">Name</th>
-                        <th scope="col">Maker</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -38,10 +37,9 @@
                     <tr>
                         <th scope="row">{{forloop.counter}}</th>
                         <td><a class="text-dark"
-                                href="{% url 'printer-model-detail' model.pk %}">{{model.name|upper}}
+                                href="{% url 'printer-model-detail' model.pk %}">{{model.maker|upper}} -{{model.name|upper}}
                             </a>
                         </td>
-                        <td>{{model.maker|upper}}</td>
                     </tr>
                     {% endfor %}
                 </tbody>
