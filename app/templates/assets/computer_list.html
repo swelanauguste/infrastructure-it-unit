@@ -31,13 +31,11 @@
                         <th scope="col">#</th>
                         <th scope="col">Computer name</th>
                         <th scope="col">Model</th>
-                        <th scope="col">Processor</th>
                         <th scope="col">RAM (GB)</th>
                         <th scope="col">Storage (GB)</th>
                         <th scope="col">OS</th>
                         <th scope="col">Location</th>
                         <th scope="col">Status</th>
-                        <th scope="col">Installed</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -49,13 +47,11 @@
                             </a>
                         </td>
                         <td>{{computer.model|upper}}</td>
-                        <td>{{computer.model.processor|upper|truncatechars:50}}</td>
                         <td>{{computer.model.ram}}</td>
                         <td>{{computer.model.hdd}}</td>
                         <td>{{computer.os}}</td>
-                        <td>{{computer.location|upper|truncatechars:10}}</td>
+                        <td>{{computer.location|upper}}</td>
                         <td>{{computer.status}}</td>
-                        <td>{{computer.date_installed}}</td>
                     </tr>
                     {% endfor %}
                 </tbody>
