@@ -49,11 +49,11 @@
                             </a>
                         </td>
                         <td>{{computer.model|upper}}</td>
-                        <td>{{computer.model.processor|upper}}</td>
+                        <td>{{computer.model.processor|upper|truncatechars:50}}</td>
                         <td>{{computer.model.ram}}</td>
                         <td>{{computer.model.hdd}}</td>
                         <td>{{computer.os}}</td>
-                        <td>{{computer.location|upper}}</td>
+                        <td>{{computer.location|upper|truncatechars:10}}</td>
                         <td>{{computer.status}}</td>
                         <td>{{computer.date_installed}}</td>
                     </tr>
