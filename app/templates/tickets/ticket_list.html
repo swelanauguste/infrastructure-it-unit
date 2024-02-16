@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 
+{% load humanize %}
 
 {% block content %}
 <div class="container py-5 mb-5">
@@ -12,29 +13,13 @@
         </a>
     </div>
     <hr>
-    <div class="table-responsive">
-        <table class="table table-sm table-hover small">
-            <thead>
-                <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">user</th>
-                    <th scope="col">description</th>
-                    <th scope="col">created</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for ticket in object_list %}
-                <tr>
-                    <th scope="row">{{forloop.counter}}</th>
-                    <td><a class="text-dark"
-                            href="{{ticket.get_absolute_url}}">{{ticket.user}}</a>
-                    </td>
-                    <td>{{ticket.description|truncatechars:100}}</td>
-                    <td>{{ticket.created_at}}</td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-    </div>
+    <ol>
+        {% for ticket in object_list %}
+        <li><a class="text-dark"
+                href="{{ticket.get_absolute_url}}">{{ticket.ticket_id}}</a>
+        </li>
+        {% endfor %}
+    </ol>
+
 </div>
 {% endblock content %}

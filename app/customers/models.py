@@ -14,10 +14,12 @@ class Department(models.Model):
 
 class Customer(models.Model):
     name = models.CharField(max_length=100)
-    department = models.ForeignKey(Department, on_delete=models.SET_NULL, null=True)
-    job_title = models.CharField(max_length=100, null=True)
+    department = models.ForeignKey(
+        Department, on_delete=models.SET_NULL, null=True, blank=True
+    )
+    job_title = models.CharField(max_length=100, null=True, blank=True)
     email = models.EmailField()
-    ext = models.CharField(max_length=4)
+    ext = models.CharField(max_length=4, blank=True, null=True)
 
     class Meta:
         ordering = ["name"]
