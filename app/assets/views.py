@@ -156,6 +156,38 @@ class PrinterDetailView(DetailView):
 
 class PrinterModelDetailView(DetailView):
     model = PrinterModel
+    
+class MonitorListView(ListView):
+    model = Monitor
+
+    def get_queryset(self):
+        query = self.request.GET.get("monitors")
+
+        if query:
+            return Monitor.objects.filter(
+                Q(serial_number__icontains=query)
+                | Q(monitor_name__icontains=query)
+                | Q(model__name__icontains=query)
+                | Q(model__maker__name__icontains=query)
+                | Q(status__name__icontains=query)
+                | Q(location__icontains=query)
+                | Q(dept__icontains=query)
+            ).distinct()
+        return Monitor.objects.all()
+
+
+class MonitorModelListView(ListView):
+    model = MonitorModel
+
+    def get_queryset(self):
+        query = self.request.GET.get("monitor-models")
+
+        if query:
+            return MonitorModel.objects.filter(
+                Q(name__icontains=query)
+                | Q(maker__name__icontains=query)
+            ).distinct()
+        return MonitorModel.objects.all()
 
 
 class MonitorCreateView(CreateView):

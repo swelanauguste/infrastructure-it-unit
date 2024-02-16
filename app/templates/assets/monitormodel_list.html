@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+<div class="p-5 mb-5">
+    <h1>Monitor models</h1>
+    <hr>
+    <div class="text-end">
+        <a href="{% url 'monitor-model-create' %}">
+            <span class="fs-3 text-success material-symbols-outlined">
+                add_box
+            </span>
+        </a>
+    </div>
+    <div class="col-lg-6 mx-auto py-3">
+        <form action=""
+            method="get">
+            <input class="form-control form-control-lg rounded-pill"
+                type="search"
+                name="monitor-models"
+                placeholder="Search monitor models..."
+                id="">
+        </form>
+    </div>
+    <br>
+    <section>
+        <div class="table-responsive px-5">
+            <table class="table table-sm small">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Name</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for model in object_list %}
+                    <tr>
+                        <th scope="row">{{forloop.counter}}</th>
+                        <td><a class="text-dark"
+                                href="{% url 'monitor-model-detail' model.pk %}">{{model.maker|upper}} -{{model.name|upper}}
+                            </a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </section>
+</div>
+
+{% endblock content %}

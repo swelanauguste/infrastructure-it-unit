@@ -23,6 +23,8 @@ from .views import (
     PrinterModelListView,
     PrinterModelUpdateView,
     PrinterUpdateView,
+    MonitorListView,
+    MonitorModelListView
 )
 
 urlpatterns = [
@@ -85,6 +87,10 @@ urlpatterns = [
         "add/printer-model/",
         PrinterModelCreateView.as_view(),
         name="printer-model-create",
+    ),
+    path("monitor/", MonitorListView.as_view(), name="monitor-list"),
+    path(
+        "monitor-models/", MonitorModelListView.as_view(), name="monitor-model-list"
     ),
     path(
         "monitor/detail/<int:pk>/",
