@@ -25,6 +25,7 @@ from .models import (
 
 class ComputerListView(ListView):
     model = Computer
+    paginate_by = 25
 
     def get_queryset(self):
         query = self.request.GET.get("computers")
