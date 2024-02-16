@@ -99,7 +99,7 @@ class ComputerModel(models.Model):
         return reverse("computer-model-detail", kwargs={"pk": self.pk})
 
     def __str__(self):
-        return f"{self.maker} - {self.name}"
+        return f"{self.maker} - {self.name} - {self.processor}"
 
 
 class Computer(models.Model):

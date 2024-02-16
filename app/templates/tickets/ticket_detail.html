@@ -1,18 +1,32 @@
 {% extends 'base.html' %}
 
+{% load crispy_forms_tags %}
+
 
 {% block content %}
 <div class="container py-5 mb-5">
     <h1>{{object}}</h1>
     <hr>
     <div class="row">
-        <span>Description</span>
         <div class="bg-light px-5 py-3">
-            <p>{{object.description}}</p>
+            <p class="fs-5">{{object.description}}</p>
             <div class="text-end">
                 <span class="small text-muted">{{object.created_at}}</span>
             </div>
         </div>
+    </div>
+    <div class="p-5">
+        {% for comment in object.comments.all %}
+        <p>{{ comment.comments }} <span class="ms-3 small text-muted">{{comment.created_at}}</span></p>
+        {% endfor %}
+
+        <form method="post"
+            action="{% url 'add-comment' object.pk %}">
+            {% csrf_token %}
+            {{ comment_form|crispy }}
+            <button class="btn btn-dark"
+                type="submit">Add Comment</button>
+        </form>
     </div>
 </div>
 {% endblock content %}
