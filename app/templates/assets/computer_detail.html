@@ -5,6 +5,10 @@
 <div class="container py-5 mb-5">
     <h1>{{object}}</h1>
     <hr>
+    <div class="text-end py-3">
+        <a class="btn btn-dark"
+            href="{% url 'computer-update' object.pk %}">Edit</a>
+    </div>
     <div class="row">
         <div class="col-md-4">
             <p>Computer name: {{object.computer_name}}</p>
@@ -38,10 +42,7 @@
             <p>{{object.notes}}</p>
 
         </div>
-        <div class="text-end py-3">
-            <a class="btn btn-dark"
-                href="{% url 'computer-update' object.pk %}">Edit</a>
-        </div>
+    
     </div>
 </div>
 {% endblock content %}

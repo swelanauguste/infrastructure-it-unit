@@ -5,6 +5,10 @@
 <div class="container py-5 mb-5">
     <h1>{{object}}</h1>
     <hr>
+    <div class="text-end py-3">
+        <a class="btn btn-dark"
+            href="{% url 'monitor-update' object.pk %}">Edit</a>
+    </div>
     <div class="row">
         <div class="col-md-4">
             <p>Serial Number: {{object.serial_number}}</p>
@@ -21,10 +25,7 @@
             <p>Installed: {{object.date_installed}}</p>
             <p>Notes: {{object.notes}}</p>
         </div>
-        <div class="text-end">
-            <a class="text-dark"
-                href="{% url 'monitor-update' object.pk %}">Edit</a>
-        </div>
+     
     </div>
 </div>
 {% endblock content %}
