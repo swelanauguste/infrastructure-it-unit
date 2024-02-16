@@ -9,13 +9,13 @@
         <p>Maker: {{object.maker}}</p>
         <div class="text-end">
             <a class="text-dark"
-                href="{% url 'printer-model-update' object.pk %}">Edit</a>
+                href="{% url 'monitor-model-update' object.pk %}">Edit</a>
         </div>
         <hr>
-        <p>Printers</p>
+        <p>Monitors</p>
         <ol>
-            {% for printer in object.printers.all %}
-            <li><a href="">{{printer}}</a></li>
+            {% for monitor in object.monitors.all %}
+            <li><a href="">{{monitor}}</a></li>
             {% endfor %}
         </ol>
     </div>

@@ -3,8 +3,10 @@ from django.urls import path
 from .views import (
     ComputerCreateView,
     ComputerDetailView,
+    ComputerListView,
     ComputerModelCreateView,
     ComputerModelDetailView,
+    ComputerModelListView,
     ComputerModelUpdateView,
     ComputerUpdateView,
     MonitorCreateView,
@@ -15,15 +17,19 @@ from .views import (
     MonitorUpdateView,
     PrinterCreateView,
     PrinterDetailView,
+    PrinterListView,
     PrinterModelCreateView,
     PrinterModelDetailView,
+    PrinterModelListView,
     PrinterModelUpdateView,
     PrinterUpdateView,
-    inventory_view,
 )
 
 urlpatterns = [
-    path("", inventory_view, name="inventory"),
+    path("computers/", ComputerListView.as_view(), name="computer-list"),
+    path(
+        "computer-models/", ComputerModelListView.as_view(), name="computer-model-list"
+    ),
     path(
         "computer/detail/<int:pk>/",
         ComputerDetailView.as_view(),
@@ -49,6 +55,10 @@ urlpatterns = [
         "add/computer-model/",
         ComputerModelCreateView.as_view(),
         name="computer-model-create",
+    ),
+    path("printers/", PrinterListView.as_view(), name="printer-list"),
+    path(
+        "printer-models/", PrinterModelListView.as_view(), name="printer-model-list"
     ),
     path(
         "printer/detail/<int:pk>/",

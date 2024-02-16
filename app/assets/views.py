@@ -1,9 +1,11 @@
+from django.db.models import Q
 from django.shortcuts import render
 from django.views.generic import (
     CreateView,
     DeleteView,
     DetailView,
     ListView,
+    TemplateView,
     UpdateView,
 )
 
@@ -21,16 +23,82 @@ from .models import (
 )
 
 
-def inventory_view(request):
-    context = {
-        "computers": Computer.objects.all(),
-        "computer_models": ComputerModel.objects.all(),
-        "printers": Printer.objects.all(),
-        "printer_models": PrinterModel.objects.all(),
-        "monitors": Monitor.objects.all(),
-        "monitor_models": MonitorModel.objects.all(),
-    }
-    return render(request, "assets/inventory.html", context)
+class ComputerListView(ListView):
+    model = Computer
+
+    def get_queryset(self):
+        query = self.request.GET.get("computers")
+
+        if query:
+            return Computer.objects.filter(
+                Q(serial_number__icontains=query)
+                | Q(computer_name__icontains=query)
+                | Q(os__name__icontains=query)
+                | Q(model__name__icontains=query)
+                | Q(model__computer_type__name__icontains=query)
+                | Q(model__maker__name__icontains=query)
+                | Q(model__processor__icontains=query)
+                | Q(model__ram__icontains=query)
+                | Q(model__hdd__icontains=query)
+                | Q(user__icontains=query)
+                | Q(status__name__icontains=query)
+                | Q(warranty_info__icontains=query)
+                | Q(location__icontains=query)
+                | Q(dept__icontains=query)
+            ).distinct()
+        return Computer.objects.all()
+
+
+class ComputerModelListView(ListView):
+    model = ComputerModel
+
+    def get_queryset(self):
+        query = self.request.GET.get("computer-models")
+
+        if query:
+            return ComputerModel.objects.filter(
+                Q(name__icontains=query)
+                | Q(computer_type__name__icontains=query)
+                | Q(maker__name__icontains=query)
+                | Q(processor__icontains=query)
+                | Q(ram__icontains=query)
+                | Q(hdd__icontains=query)
+            ).distinct()
+        return ComputerModel.objects.all()
+
+
+class PrinterListView(ListView):
+    model = Printer
+
+    def get_queryset(self):
+        query = self.request.GET.get("printers")
+
+        if query:
+            return Printer.objects.filter(
+                Q(serial_number__icontains=query)
+                | Q(printer_name__icontains=query)
+                | Q(model__name__icontains=query)
+                | Q(model__maker__name__icontains=query)
+                | Q(status__name__icontains=query)
+                | Q(location__icontains=query)
+                | Q(ip_addr__icontains=query)
+                | Q(dept__icontains=query)
+            ).distinct()
+        return Printer.objects.all()
+
+
+class PrinterModelListView(ListView):
+    model = PrinterModel
+
+    def get_queryset(self):
+        query = self.request.GET.get("printer-models")
+
+        if query:
+            return PrinterModel.objects.filter(
+                Q(name__icontains=query)
+                | Q(maker__name__icontains=query)
+            ).distinct()
+        return PrinterModel.objects.all()
 
 
 class ComputerCreateView(CreateView):

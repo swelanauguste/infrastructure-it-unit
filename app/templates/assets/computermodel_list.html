@@ -3,10 +3,10 @@
 
 {% block content %}
 <div class="container py-5 mb-5">
-    <h1>Computers</h1>
+    <h1>Computer models</h1>
     <hr>
     <div class="text-end">
-        <a href="{% url 'computer-create' %}">
+        <a href="{% url 'computer-model-create' %}">
             <span class="fs-3 text-success material-symbols-outlined">
                 add_box
             </span>
@@ -17,8 +17,8 @@
             method="get">
             <input class="form-control form-control-lg rounded-pill"
                 type="search"
-                name="computers"
-                placeholder="Search computer..."
+                name="computer-models"
+                placeholder="Search computer models..."
                 id="">
         </form>
     </div>
@@ -29,33 +29,27 @@
                 <thead>
                     <tr>
                         <th scope="col">#</th>
-                        <th scope="col">Computer name</th>
-                        <th scope="col">Model</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Type</th>
+                        <th scope="col">Maker</th>
                         <th scope="col">Processor</th>
                         <th scope="col">RAM (GB)</th>
                         <th scope="col">Storage (GB)</th>
-                        <th scope="col">OS</th>
-                        <th scope="col">Location</th>
-                        <th scope="col">Status</th>
-                        <th scope="col">Installed</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {% for computer in object_list %}
+                    {% for model in object_list %}
                     <tr>
                         <th scope="row">{{forloop.counter}}</th>
                         <td><a class="text-dark"
-                                href="{% url 'computer-detail' computer.pk %}">{{computer.computer_name|upper}}
+                                href="{% url 'computer-model-detail' model.pk %}">{{model.name|upper}}
                             </a>
                         </td>
-                        <td>{{computer.model|upper}}</td>
-                        <td>{{computer.model.processor|upper}}</td>
-                        <td>{{computer.model.ram}}</td>
-                        <td>{{computer.model.hdd}}</td>
-                        <td>{{computer.os}}</td>
-                        <td>{{computer.location|upper}}</td>
-                        <td>{{computer.status}}</td>
-                        <td>{{computer.date_installed}}</td>
+                        <td>{{model.computer_type|upper}}</td>
+                        <td>{{model.maker|upper}}</td>
+                        <td>{{model.processor}}</td>
+                        <td>{{model.ram}}</td>
+                        <td>{{model.hdd}}</td>
                     </tr>
                     {% endfor %}
                 </tbody>

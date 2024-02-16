@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+<div class="container py-5 mb-5">
+    <h1>Printer models</h1>
+    <hr>
+    <div class="text-end">
+        <a href="{% url 'printer-model-create' %}">
+            <span class="fs-3 text-success material-symbols-outlined">
+                add_box
+            </span>
+        </a>
+    </div>
+    <div class="col-lg-6 mx-auto py-3">
+        <form action=""
+            method="get">
+            <input class="form-control form-control-lg rounded-pill"
+                type="search"
+                name="printer-models"
+                placeholder="Search printer models..."
+                id="">
+        </form>
+    </div>
+    <br>
+    <section>
+        <div class="table-responsive px-5">
+            <table class="table table-sm small">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Maker</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for model in object_list %}
+                    <tr>
+                        <th scope="row">{{forloop.counter}}</th>
+                        <td><a class="text-dark"
+                                href="{% url 'printer-model-detail' model.pk %}">{{model.name|upper}}
+                            </a>
+                        </td>
+                        <td>{{model.maker|upper}}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </section>
+</div>
+
+{% endblock content %}

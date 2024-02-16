@@ -104,10 +104,12 @@ class ComputerModel(models.Model):
 
 class Computer(models.Model):
     serial_number = models.CharField(max_length=100, blank=True, null=True)
+    warranty_info = models.CharField("Warranty", max_length=100)
     computer_name = models.CharField(max_length=100, blank=True, null=True)
     model = models.ForeignKey(
         ComputerModel, on_delete=models.CASCADE, related_name="computers"
     )
+    status = models.ForeignKey(Status, on_delete=models.CASCADE)
     monitor = models.ManyToManyField(Monitor, related_name="monitors", blank=True)
     os = models.ForeignKey(
         OperatingSystem,
@@ -118,12 +120,10 @@ class Computer(models.Model):
     )
     location = models.CharField(max_length=100, blank=True, null=True)
     ip_addr = models.GenericIPAddressField("IP Address", blank=True, null=True)
-    dept = models.CharField(max_length=100, blank=True, null=True)
+    dept = models.CharField("Department", max_length=100, blank=True, null=True)
     user = models.CharField(max_length=100, blank=True, null=True)
-    status = models.ForeignKey(Status, on_delete=models.CASCADE)
     date_received = models.DateField(blank=True, null=True)
     date_installed = models.DateField(blank=True, null=True)
-    warranty_info = models.CharField(max_length=100)
     image = models.FileField(upload_to="system_audit/", blank=True, null=True)
     notes = models.TextField(blank=True, null=True)
 
@@ -161,8 +161,8 @@ class Printer(models.Model):
         PrinterModel, on_delete=models.CASCADE, related_name="printers"
     )
     location = models.CharField(max_length=100, null=True, blank=True)
-    ip_addr = models.GenericIPAddressField(blank=True, null=True)
-    dept = models.CharField(max_length=100, blank=True, null=True)
+    ip_addr = models.GenericIPAddressField("IP Address", blank=True, null=True)
+    dept = models.CharField("Department", max_length=100, blank=True, null=True)
     status = models.ForeignKey(Status, on_delete=models.CASCADE)
     date_received = models.DateField(blank=True, null=True)
     date_installed = models.DateField(blank=True, null=True)
