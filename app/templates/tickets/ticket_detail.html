@@ -21,7 +21,7 @@
         {% endfor %}
 
         <form method="post"
-            action="{% url 'add-comment' object.pk %}">
+            action="{% url 'add-comment' object.slug %}">
             {% csrf_token %}
             {{ comment_form|crispy }}
             <button class="btn btn-dark"

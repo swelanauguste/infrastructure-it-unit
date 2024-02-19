@@ -48,6 +48,39 @@
             font-style: normal;
         }
 
+        .hide-me {
+            -webkit-animation: cssAnimation 7s forwards;
+            animation: cssAnimation 7s forwards;
+        }
+
+        @keyframes cssAnimation {
+            0% {
+                opacity: 1;
+            }
+
+            90% {
+                opacity: 1;
+            }
+
+            100% {
+                opacity: 0;
+            }
+        }
+
+        @-webkit-keyframes cssAnimation {
+            0% {
+                opacity: 1;
+            }
+
+            90% {
+                opacity: 1;
+            }
+
+            100% {
+                opacity: 0;
+            }
+        }
+
         body {
             min-height: 100vh;
             min-height: -webkit-fill-available;
@@ -120,12 +153,13 @@
 </head>
 
 <body>
-    <div class="row">
-        <div style="width: 280px;">
+    {% include 'messages.html' %}
+
+    <div class="d-flex justify-content-between">
+        <div>
             {% include 'sidebar.html' %}
         </div>
-        {% include 'messages.html' %}
-        <div class="col">
+        <div style="width: 100%;">
             {% block content %}
 
             {% endblock content %}

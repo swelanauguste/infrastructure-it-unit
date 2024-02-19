@@ -12,7 +12,17 @@
             </span>
         </a>
     </div>
-    <hr>
+    <div class="col-lg-6 mx-auto py-3">
+        <form action=""
+            method="get">
+            <input class="form-control form-control-lg rounded-pill"
+                type="search"
+                name="ticket"
+                placeholder="Ticket ID"
+                id="">
+        </form>
+    </div>
+    <br>
     <ol>
         {% for ticket in object_list %}
         <li><a class="text-dark"

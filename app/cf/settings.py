@@ -1,9 +1,12 @@
 import os
 from pathlib import Path
 
+from dotenv import load_dotenv
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+load_dotenv()
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
@@ -27,6 +30,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "django.contrib.humanize",
+    "django.contrib.sites",
     "crispy_forms",
     "crispy_bootstrap5",
     "assets",
@@ -126,3 +130,17 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
 
 CRISPY_TEMPLATE_PACK = "bootstrap5"
+
+
+# # EMAIL
+# EMAIL_BACKEND = "django.core.mail.backends.filebased.EmailBackend"
+# EMAIL_FILE_PATH = "emails"
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+EMAIL_HOST = "smtp.gmail.com"
+EMAIL_HOST_USER = os.environ.get("EMAIL")
+EMAIL_HOST_PASSWORD = os.environ.get("PASS")
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_USE_SSL = False
+
+SITE_ID = 1

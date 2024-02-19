@@ -1,7 +1,13 @@
 from customers.models import Customer
 from django.contrib import messages
+from django.contrib.sites.models import Site
 from django.core.exceptions import ObjectDoesNotExist
-from django.shortcuts import redirect, render, get_object_or_404
+from django.core.mail import send_mail
+from django.db.models import Q
+from django.shortcuts import get_object_or_404, redirect, render
+from django.template.loader import render_to_string
+from django.urls import reverse
+from django.utils.html import strip_tags
 from django.views.generic import CreateView, DetailView, ListView, UpdateView
 
 from .forms import CommentCreateForm, TicketCreateForm
@@ -26,8 +32,9 @@ def create_ticket_view(request):
 
             ticket = Ticket.objects.create(user=customer, description=description)
             ticket.save()
+            send_ticket_creation_email(ticket, email)
             messages.success(request, "Ticket was created successfully")
-            return redirect("ticket-detail", pk=ticket.pk)
+            return redirect("ticket-detail", slug=ticket.slug)
     else:
         form = TicketCreateForm()
 
@@ -35,8 +42,42 @@ def create_ticket_view(request):
     return render(request, "tickets/create_ticket.html", context)
 
 
+def send_ticket_creation_email(ticket, recipient_email):
+    current_site = Site.objects.get_current()
+    domain = current_site.domain
+
+    subject = f"New Ticket {ticket.ticket_id}"
+    ticket_url = reverse("ticket-detail", kwargs={"slug": ticket.slug})
+    full_url = f"http://{domain}{ticket_url}"
+
+    html_message = render_to_string(
+        "tickets/email_template.html", {"ticket": ticket, "full_url": full_url}
+    )
+    plain_message = strip_tags(html_message)
+
+    send_mail(
+        subject,
+        plain_message,
+        "swelanauguste@gmail.com",
+        [recipient_email],
+        html_message=html_message,
+    )
+
+
 class TicketListView(ListView):
     model = Ticket
+
+
+class CustomerTicketListView(ListView):
+    model = Ticket
+    template_name = "tickets/customer_ticket_list.html"
+
+    def get_queryset(self):
+        query = self.request.GET.get("ticket")
+
+        if query:
+            return Ticket.objects.filter(Q(ticket_id__iexact=query)).distinct()
+        return Ticket.objects.none()
 
 
 class TicketDetailView(DetailView):
@@ -48,8 +89,8 @@ class TicketDetailView(DetailView):
         return context
 
 
-def add_comment_view(request, pk):
-    ticket = get_object_or_404(Ticket, pk=pk)
+def add_comment_view(request, slug):
+    ticket = get_object_or_404(Ticket, slug=slug)
 
     if request.method == "POST":
         form = CommentCreateForm(request.POST)
@@ -57,7 +98,7 @@ def add_comment_view(request, pk):
             comment = form.save(commit=False)
             comment.ticket = ticket
             comment.save()
-            return redirect("ticket-detail", pk=pk)
+            return redirect("ticket-detail", slug=slug)
 
     # If the form is not valid or the request method is not POST
     return render(
