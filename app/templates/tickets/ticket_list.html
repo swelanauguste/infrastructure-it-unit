@@ -3,7 +3,7 @@
 {% load humanize %}
 
 {% block content %}
-<div class="container py-5 mb-5">
+<div class="p-5 mb-5">
     <h1>Tickets</h1>
     <div class="text-end">
         <a href="{% url 'ticket-create' %}">
@@ -23,13 +23,23 @@
         </form>
     </div>
     <br>
-    <ol>
-        {% for ticket in object_list %}
-        <li><a class="text-dark"
-                href="{{ticket.get_absolute_url}}">{{ticket.ticket_id}}</a>
-        </li>
-        {% endfor %}
-    </ol>
+    <div class="table responsive">
+        <table class="table table-sm table-hover small">
+            <tbody>
+                {% for ticket in object_list %}
+                <tr>
+                    <th scope="row">{{forloop.counter}}</th>
+                    <td>{{ticket.ticket_id}} - <span class="small text-muted">
+                            {{ticket.created_at|naturaltime}}</span></td>
+                    <td>{{ticket.user}}</td>
+                    <td><a class="text-dark"
+                            href="{{ticket.get_absolute_url}}">{{ticket.description|truncatechars:100}}</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
 
 </div>
 {% endblock content %}

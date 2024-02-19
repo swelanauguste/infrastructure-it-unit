@@ -66,6 +66,7 @@ def send_ticket_creation_email(ticket, recipient_email):
 
 class TicketListView(ListView):
     model = Ticket
+    paginate_by = 25
 
 
 class CustomerTicketListView(ListView):
