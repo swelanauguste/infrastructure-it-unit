@@ -11,6 +11,7 @@ from .models import (
     Printer,
     PrinterModel,
     Status,
+    Location
 )
 
 admin.site.register(ComputerType)
@@ -23,3 +24,4 @@ admin.site.register(Printer)
 admin.site.register(OperatingSystem)
 admin.site.register(MonitorModel)
 admin.site.register(Monitor)
+admin.site.register(Location)
