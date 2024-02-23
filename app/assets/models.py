@@ -3,6 +3,17 @@ from django.db import models
 from django.shortcuts import reverse
 
 
+class Location(models.Model):
+    name = models.CharField(max_length=100)
+    details = models.CharField(max_length=100, blank=True, null=True)
+
+    class Meta:
+        ordering = ["name"]
+
+    def __str__(self):
+        return self.name
+
+
 class Maker(models.Model):
     name = models.CharField(max_length=100)
 
@@ -54,6 +65,14 @@ class Monitor(models.Model):
     monitor_name = models.CharField(max_length=100, blank=True, null=True)
     model = models.ForeignKey(
         MonitorModel, on_delete=models.CASCADE, related_name="monitors"
+    )
+    site = models.ForeignKey(
+        Location,
+        on_delete=models.CASCADE,
+        blank=True,
+        null=True,
+        related_name="monitor_sites",
+        verbose_name="location",
     )
     location = models.CharField(max_length=100, null=True, blank=True)
     dept = models.CharField(max_length=100, blank=True, null=True)
@@ -118,6 +137,14 @@ class Computer(models.Model):
         blank=True,
         verbose_name="Operating System",
     )
+    site = models.ForeignKey(
+        Location,
+        on_delete=models.CASCADE,
+        blank=True,
+        null=True,
+        related_name="computer_sites",
+        verbose_name="location",
+    )
     location = models.CharField(max_length=100, blank=True, null=True)
     ip_addr = models.GenericIPAddressField("IP Address", blank=True, null=True)
     department = models.ForeignKey(
@@ -180,6 +207,15 @@ class Printer(models.Model):
     printer_name = models.CharField(max_length=100, blank=True, null=True)
     model = models.ForeignKey(
         PrinterModel, on_delete=models.CASCADE, related_name="printers"
+    )
+
+    site = models.ForeignKey(
+        Location,
+        on_delete=models.CASCADE,
+        blank=True,
+        null=True,
+        related_name="printer_sites",
+        verbose_name="location",
     )
     location = models.CharField(max_length=100, null=True, blank=True)
     ip_addr = models.GenericIPAddressField("IP Address", blank=True, null=True)
