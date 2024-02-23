@@ -45,6 +45,11 @@ class ComputerListView(ListView):
     model = Computer
     paginate_by = 25
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["computer_count"] = Computer.objects.all().count()
+        return context
+
     def get_queryset(self):
         query = self.request.GET.get("computers")
 
@@ -71,6 +76,11 @@ class ComputerListView(ListView):
 class ComputerModelListView(ListView):
     model = ComputerModel
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["computer_model_count"] = ComputerModel.objects.all().count()
+        return context
+
     def get_queryset(self):
         query = self.request.GET.get("computer-models")
 
@@ -88,6 +98,11 @@ class ComputerModelListView(ListView):
 
 class PrinterListView(ListView):
     model = Printer
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["printer_count"] = Printer.objects.all().count()
+        return context
 
     def get_queryset(self):
         query = self.request.GET.get("printers")
@@ -108,6 +123,11 @@ class PrinterListView(ListView):
 
 class PrinterModelListView(ListView):
     model = PrinterModel
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["printer_model_count"] = PrinterModel.objects.all().count()
+        return context
 
     def get_queryset(self):
         query = self.request.GET.get("printer-models")
