@@ -3,15 +3,16 @@
 
 {% block content %}
 <div class="p-5 mb-5">
-    <h1>Computer models</h1>
-    <hr>
-    <div class="text-end">
+    <div class="d-flex justify-content-start align-items-center">
+        <h1>Computer models</h1>
         <a href="{% url 'computer-model-create' %}">
-            <span class="fs-3 text-success material-symbols-outlined">
+            <span class="ms-5 fs-3 text-success material-symbols-outlined">
                 add_box
             </span>
         </a>
     </div>
+    <hr>
+
     <div class="col-lg-6 mx-auto py-3">
         <form action=""
             method="get">
@@ -25,7 +26,7 @@
     <br>
     <section>
         <div class="table-responsive px-5">
-            <table class="table table-sm small">
+            <table class="table table-hover table-sm small">
                 <thead>
                     <tr>
                         <th scope="col">#</th>

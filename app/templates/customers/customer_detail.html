@@ -3,21 +3,22 @@
 
 
 {% block content %}
-<div class="container py-5 mb-5">
+<div class="p-5 mb-5">
     <h1>{{object}}</h1>
     <hr>
-    <div class="row">
-        <ul>
-            <li>Name: {{object.name}}</li>
-            <li>Email: {{object.email}}</li>
-            <li>Phone: {{object.phone}}</li>
-            <li>Address: {{object.address}}</li>
-            <li>City: {{object.city}}</li>
-        </ul>
+    <div class="border shadow p-5 rounded-4 ">
         <div class="text-end">
             <a href="{% url 'customer-update' object.id %}"
-                class="text-dark">Edit</a>
+                class="btn btn-dark">Edit</a>
         </div>
+        <hr>
+        <ul>
+            <li>Role: {{object.job_title}}</li>
+            <li>Department: {{object.department}}</li>
+            <li>Email: {{object.email}}</li>
+            <li>Ext: {{object.ext}}</li>
+        </ul>
+
     </div>
 </div>
 {% endblock content %}

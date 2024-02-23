@@ -3,15 +3,15 @@
 
 {% block content %}
 <div class="p-5 mb-5">
-    <h1>Computers</h1>
-    <hr>
-    <div class="text-end">
+    <div class="d-flex justify-content-start align-items-center">
+        <h1>Computers</h1>
         <a href="{% url 'computer-create' %}">
-            <span class="fs-3 text-success material-symbols-outlined">
+            <span class="ms-5 fs-3 text-success material-symbols-outlined">
                 add_box
             </span>
         </a>
     </div>
+    <hr>
     <div class="col-lg-6 mx-auto py-3">
         <form action=""
             method="get">
@@ -24,7 +24,6 @@
     </div>
     <br>
     <section>
-
         <div class="pagination">
             <span class="step-links">
                 {% if page_obj.has_previous %}

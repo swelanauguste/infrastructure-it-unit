@@ -2,11 +2,11 @@
 
 
 {% block content %}
-<div class="container py-5 mb-5">
-    <h1>Customers</h1>
-    <div class="text-end">
+<div class="p-5 mb-5">
+    <div class="d-flex justify-content-start align-items-center">
+        <h1>Customers</h1>
         <a href="{% url 'customer-create' %}">
-            <span class="text-success material-symbols-outlined">
+            <span class="fs-3 ms-5 text-success material-symbols-outlined">
                 add_box
             </span>
         </a>
@@ -28,10 +28,10 @@
                 <tr>
                     <th scope="row">{{forloop.counter}}</th>
                     <td><a class="text-dark"
-                            href="{{customer.get_absolute_url}}">{{customer.name}}</a>
+                            href="{{customer.get_absolute_url}}">{{customer.name|title}}</a>
                     </td>
                     <td><a class="text-dark"
-                            href="mailto:{{customer.email}}">{{customer.email}}</a>
+                            href="mailto:{{customer.email}}">{{customer.email|lower}}</a>
                     </td>
                     <td>{{customer.ext}}</td>
                     <td>{{customer.department}}</td>
