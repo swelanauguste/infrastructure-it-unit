@@ -1,5 +1,5 @@
 from django.db.models import Q
-from django.shortcuts import render
+from django.shortcuts import get_object_or_404, redirect, render
 from django.views.generic import (
     CreateView,
     DeleteView,
@@ -9,9 +9,10 @@ from django.views.generic import (
     UpdateView,
 )
 
-from .forms import ComputerForm, MonitorForm, PrinterForm
+from .forms import CommentCreateForm, ComputerForm, MonitorForm, PrinterForm
 from .models import (
     Computer,
+    ComputerComment,
     ComputerModel,
     ComputerType,
     Maker,
@@ -21,6 +22,23 @@ from .models import (
     PrinterModel,
     Status,
 )
+
+
+def add_computer_comment_view(request, pk):
+    computer = get_object_or_404(Computer, pk=pk)
+
+    if request.method == "POST":
+        form = CommentCreateForm(request.POST)
+        if form.is_valid():
+            comment = form.save(commit=False)
+            comment.computer = computer
+            comment.save()
+            return redirect("computer-detail", pk=pk)
+
+    # If the form is not valid or the request method is not POST
+    return render(
+        request, "assets/computer_detail.html", {"ticket": ticket, "comment_form": form}
+    )
 
 
 class ComputerListView(ListView):
@@ -96,8 +114,7 @@ class PrinterModelListView(ListView):
 
         if query:
             return PrinterModel.objects.filter(
-                Q(name__icontains=query)
-                | Q(maker__name__icontains=query)
+                Q(name__icontains=query) | Q(maker__name__icontains=query)
             ).distinct()
         return PrinterModel.objects.all()
 
@@ -124,6 +141,11 @@ class ComputerModelUpdateView(UpdateView):
 
 class ComputerDetailView(DetailView):
     model = Computer
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["comment_form"] = CommentCreateForm()
+        return context
 
 
 class ComputerModelDetailView(DetailView):
@@ -156,7 +178,8 @@ class PrinterDetailView(DetailView):
 
 class PrinterModelDetailView(DetailView):
     model = PrinterModel
-    
+
+
 class MonitorListView(ListView):
     model = Monitor
 
@@ -184,8 +207,7 @@ class MonitorModelListView(ListView):
 
         if query:
             return MonitorModel.objects.filter(
-                Q(name__icontains=query)
-                | Q(maker__name__icontains=query)
+                Q(name__icontains=query) | Q(maker__name__icontains=query)
             ).distinct()
         return MonitorModel.objects.all()
 

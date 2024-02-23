@@ -1,6 +1,13 @@
 from django import forms
 
-from .models import Computer, Monitor, Printer
+from .models import Computer, ComputerComment, Monitor, Printer
+
+
+class CommentCreateForm(forms.ModelForm):
+    class Meta:
+        model = ComputerComment
+        fields = ["comment"]
+        widgets = {"comment": forms.Textarea(attrs={"rows": 4,})}
 
 
 class PrinterForm(forms.ModelForm):

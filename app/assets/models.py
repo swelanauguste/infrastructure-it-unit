@@ -139,6 +139,20 @@ class Computer(models.Model):
         return f"N/A"
 
 
+class ComputerComment(models.Model):
+    computer = models.ForeignKey(
+        Computer, on_delete=models.CASCADE, related_name="comments"
+    )
+    comment = models.TextField(blank=True, null=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ["-created_at"]
+
+    def __str__(self):
+        return f"{self.computer.computer_name} - comment {self.pk}"
+
+
 class PrinterModel(models.Model):
     name = models.CharField(max_length=100)
     maker = models.ForeignKey(Maker, on_delete=models.CASCADE)

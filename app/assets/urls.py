@@ -11,8 +11,10 @@ from .views import (
     ComputerUpdateView,
     MonitorCreateView,
     MonitorDetailView,
+    MonitorListView,
     MonitorModelCreateView,
     MonitorModelDetailView,
+    MonitorModelListView,
     MonitorModelUpdateView,
     MonitorUpdateView,
     PrinterCreateView,
@@ -23,8 +25,7 @@ from .views import (
     PrinterModelListView,
     PrinterModelUpdateView,
     PrinterUpdateView,
-    MonitorListView,
-    MonitorModelListView
+    add_computer_comment_view,
 )
 
 urlpatterns = [
@@ -42,6 +43,7 @@ urlpatterns = [
         ComputerUpdateView.as_view(),
         name="computer-update",
     ),
+    path("computer/add-comment/<int:pk>/", add_computer_comment_view, name="add-computer-comment"),
     path("add/computer/", ComputerCreateView.as_view(), name="computer-create"),
     path(
         "computer-model/detail/<int:pk>/",
@@ -59,9 +61,7 @@ urlpatterns = [
         name="computer-model-create",
     ),
     path("printers/", PrinterListView.as_view(), name="printer-list"),
-    path(
-        "printer-models/", PrinterModelListView.as_view(), name="printer-model-list"
-    ),
+    path("printer-models/", PrinterModelListView.as_view(), name="printer-model-list"),
     path(
         "printer/detail/<int:pk>/",
         PrinterDetailView.as_view(),
@@ -89,9 +89,7 @@ urlpatterns = [
         name="printer-model-create",
     ),
     path("monitor/", MonitorListView.as_view(), name="monitor-list"),
-    path(
-        "monitor-models/", MonitorModelListView.as_view(), name="monitor-model-list"
-    ),
+    path("monitor-models/", MonitorModelListView.as_view(), name="monitor-model-list"),
     path(
         "monitor/detail/<int:pk>/",
         MonitorDetailView.as_view(),
