@@ -62,24 +62,13 @@ class MonitorModel(models.Model):
 
 class Monitor(models.Model):
     serial_number = models.CharField(max_length=100, blank=True, null=True)
-    monitor_name = models.CharField(max_length=100, blank=True, null=True)
     model = models.ForeignKey(
         MonitorModel, on_delete=models.CASCADE, related_name="monitors"
     )
-    site = models.ForeignKey(
-        Location,
-        on_delete=models.CASCADE,
-        blank=True,
-        null=True,
-        related_name="monitor_sites",
-        verbose_name="location",
-    )
-    location = models.CharField(max_length=100, null=True, blank=True)
-    dept = models.CharField(max_length=100, blank=True, null=True)
-    status = models.ForeignKey(Status, on_delete=models.CASCADE)
+    status = models.ForeignKey(Status, on_delete=models.CASCADE, null=True, blank=True)
     date_received = models.DateField(blank=True, null=True)
     date_installed = models.DateField(blank=True, null=True)
-    notes = models.TextField(blank=True, null=True, help_text="Warranty Information")
+    notes = models.TextField(blank=True, null=True)
 
     class Meta:
         ordering = ["model__name"]
@@ -88,7 +77,7 @@ class Monitor(models.Model):
         return reverse("monitor-detail", kwargs={"pk": self.pk})
 
     def __str__(self):
-        return f"{self.model.name} - {self.dept}"
+        return f"{self.model.name} - {self.serial_number}"
 
 
 class ComputerType(models.Model):

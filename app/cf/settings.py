@@ -36,6 +36,7 @@ INSTALLED_APPS = [
     "assets",
     "tickets",
     "customers",
+    "technicians",
 ]
 
 MIDDLEWARE = [

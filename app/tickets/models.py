@@ -5,6 +5,7 @@ from customers.models import Customer
 from django.db import models
 from django.shortcuts import reverse
 from django.utils.text import slugify
+from technicians.models import Technician
 
 
 def generate_short_id():
@@ -19,7 +20,15 @@ class Ticket(models.Model):
     )
     slug = models.SlugField(max_length=8, unique=True, blank=True, null=True)
     user = models.ForeignKey(Customer, on_delete=models.SET_NULL, null=True)
+    summary = models.CharField(max_length=100, default="Summary")
     description = models.TextField()
+    assigned_to = models.ForeignKey(
+        Technician,
+        on_delete=models.SET_NULL,
+        null=True,
+        related_name="assigned_to",
+        blank=True,
+    )
     created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:

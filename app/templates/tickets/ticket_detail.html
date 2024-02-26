@@ -7,7 +7,7 @@
 
 {% block content %}
 <div class="container py-5 mb-5">
-    <h1>{{object}}</h1>
+    <h1>{{object.summary}} ({{object}})</h1>
     <hr>
     <div class="row">
         <div class="bg-light px-5 py-3 rounded-4 shadow">
@@ -19,6 +19,27 @@
         </div>
     </div>
     <br>
+
+    {% if not object.assigned_to %}
+    <div class="row">
+        <h2>Assign Technician to Ticket</h2>
+
+        <form method="post"
+            action="{% url 'assign-technician' ticket.slug %}">
+            {% csrf_token %}
+            {{ assign_technician_form|crispy }}
+            <button class="btn btn-dark"
+                type="submit">Assign Technician</button>
+        </form>
+    </div>
+    <br>
+
+    {% else %}
+    <p>Assigned To: <span class="fs-3 fw-bold">{{object.assigned_to}}</span>
+    </p>
+
+    {% endif %}
+
     <section>
         <div class="row">
             <div class="col">

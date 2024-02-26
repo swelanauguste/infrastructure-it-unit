@@ -9,9 +9,29 @@ from django.template.loader import render_to_string
 from django.urls import reverse
 from django.utils.html import strip_tags
 from django.views.generic import CreateView, DetailView, ListView, UpdateView
+from technicians.models import Technician
 
-from .forms import CommentCreateForm, TicketCreateForm
+from .forms import CommentCreateForm, TicketAssignTechnicianForm, TicketCreateForm
 from .models import Comment, Ticket
+
+
+def assign_technician_view(request, slug):
+    ticket = get_object_or_404(Ticket, slug=slug)
+
+    if request.method == "POST":
+        form = TicketAssignTechnicianForm(request.POST)
+        if form.is_valid():
+            technician_id = form.cleaned_data["technician_id"]
+            technician = get_object_or_404(Technician, id=technician_id.id)
+            ticket.assigned_to = technician
+            ticket.save()
+            return redirect("ticket-detail", slug=ticket.slug)
+    else:
+        form = AssignTechnicianForm()
+
+    return render(
+        request, "tickets/assign_technician.html", {"form": form, "ticket": ticket}
+    )
 
 
 def create_ticket_view(request):
@@ -87,6 +107,7 @@ class TicketDetailView(DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["comment_form"] = CommentCreateForm()
+        context["assign_technician_form"] = TicketAssignTechnicianForm()
         return context
 
 

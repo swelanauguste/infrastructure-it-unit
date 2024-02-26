@@ -29,12 +29,12 @@
                 {% for ticket in object_list %}
                 <tr>
                     <th scope="row">{{forloop.counter}}</th>
+                    <td><a class="text-dark"
+                            href="{{ticket.get_absolute_url}}">{{ticket.summary}}</a>
+                    </td>
                     <td>{{ticket.ticket_id}} - <span class="small text-muted">
                             {{ticket.created_at|naturaltime}}</span></td>
                     <td>{{ticket.user}}</td>
-                    <td><a class="text-dark"
-                            href="{{ticket.get_absolute_url}}">{{ticket.description|truncatechars:100}}</a>
-                    </td>
                 </tr>
                 {% endfor %}
             </tbody>
