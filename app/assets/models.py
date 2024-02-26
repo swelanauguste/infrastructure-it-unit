@@ -126,13 +126,13 @@ class Computer(models.Model):
         blank=True,
         verbose_name="Operating System",
     )
-    # location = models.ForeignKey(
-    #     Location,
-    #     on_delete=models.CASCADE,
-    #     blank=True,
-    #     null=True,
-    #     related_name="computer_locations",
-    # )
+    location = models.ForeignKey(
+        Location,
+        on_delete=models.CASCADE,
+        blank=True,
+        null=True,
+        related_name="computer_locations",
+    )
     ip_addr = models.GenericIPAddressField("IP Address", blank=True, null=True)
     department = models.ForeignKey(
         Department,
