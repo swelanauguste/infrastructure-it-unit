@@ -20,7 +20,7 @@ class Ticket(models.Model):
     )
     slug = models.SlugField(max_length=8, unique=True, blank=True, null=True)
     user = models.ForeignKey(Customer, on_delete=models.SET_NULL, null=True)
-    summary = models.CharField(max_length=100, default="Summary")
+    summary = models.CharField(max_length=100)
     description = models.TextField()
     assigned_to = models.ForeignKey(
         Technician,

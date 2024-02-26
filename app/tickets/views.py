@@ -39,6 +39,7 @@ def create_ticket_view(request):
         form = TicketCreateForm(request.POST)
         if form.is_valid():
             email = form.cleaned_data["email"]
+            summary = form.cleaned_data["summary"]
             description = form.cleaned_data["description"]
 
             try:
@@ -50,7 +51,9 @@ def create_ticket_view(request):
                 )
                 return render(request, "tickets/create_ticket.html", {"form": form})
 
-            ticket = Ticket.objects.create(user=customer, description=description)
+            ticket = Ticket.objects.create(
+                user=customer, summary=summary, description=description
+            )
             ticket.save()
             send_ticket_creation_email(ticket, email)
             messages.success(request, "Ticket was created successfully")

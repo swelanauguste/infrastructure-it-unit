@@ -19,27 +19,44 @@
         </div>
     </div>
     <br>
-
-    {% if not object.assigned_to %}
     <div class="row">
-        <h2>Assign Technician to Ticket</h2>
+        <div class="col">
+            {% if not object.assigned_to %}
 
-        <form method="post"
-            action="{% url 'assign-technician' ticket.slug %}">
-            {% csrf_token %}
-            {{ assign_technician_form|crispy }}
-            <button class="btn btn-dark"
-                type="submit">Assign Technician</button>
-        </form>
+            <h2>Assign Technician to Ticket</h2>
+
+            <form method="post"
+                action="{% url 'assign-technician' ticket.slug %}">
+                {% csrf_token %}
+                {{ assign_technician_form|crispy }}
+                <div class="d-grid">
+                    <button class="btn btn-dark"
+                        type="submit">Assign Technician</button>
+                </div>
+            </form>
+            <br>
+            {% else %}
+            <p>Assigned To: <span
+                    class="fs-3 fw-bold">{{object.assigned_to}}</span>
+            </p>
+
+            {% endif %}
+        </div>
+
+
+        <div class="col-lg">
+            <form method="post"
+                action="{% url 'add-comment' object.slug %}">
+                {% csrf_token %}
+                {{ comment_form|crispy }}
+                <div class="d-grid">
+                    <button class="btn btn-dark"
+                        type="submit">Add Comment</button>
+                </div>
+            </form>
+        </div>
     </div>
     <br>
-
-    {% else %}
-    <p>Assigned To: <span class="fs-3 fw-bold">{{object.assigned_to}}</span>
-    </p>
-
-    {% endif %}
-
     <section>
         <div class="row">
             <div class="col">
@@ -52,17 +69,7 @@
                 </p>
                 {% endfor %}
             </div>
-            <div class="col-lg-4">
-                <form method="post"
-                    action="{% url 'add-comment' object.slug %}">
-                    {% csrf_token %}
-                    {{ comment_form|crispy }}
-                    <div class="d-grid">
-                        <button class="btn btn-dark"
-                            type="submit">Add Comment</button>
-                    </div>
-                </form>
-            </div>
+
         </div>
     </section>
 </div>
