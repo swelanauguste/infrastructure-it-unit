@@ -145,3 +145,8 @@ EMAIL_USE_TLS = True
 EMAIL_USE_SSL = False
 
 SITE_ID = 1
+
+directory = 'static'
+
+if not os.path.exists(directory):
+    os.makedirs(directory)
