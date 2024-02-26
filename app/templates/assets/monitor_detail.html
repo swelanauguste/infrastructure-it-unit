@@ -12,20 +12,19 @@
     <div class="row">
         <div class="col-md-4">
             <p>Serial Number: {{object.serial_number}}</p>
-            <p>Monitor name: {{object.computer_name}}</p>
+            <p>Computer: <a
+                    href="{{object.monitors.last.get_absolute_url}}">{{object.monitors.last}}</a>
+            </p>
             <p>Model: <a
                     href="{{object.model.get_absolute_url}}">{{object.model}}</a>
             </p>
-            <p>Location: {{object.location}}</p>
-            <p>Dept: {{object.dept}}</p>
         </div>
         <div class="col-md-4">
-            <p>Status: {{object.status}}</p>
             <p>Received: {{object.date_received}}</p>
             <p>Installed: {{object.date_installed}}</p>
             <p>Notes: {{object.notes}}</p>
         </div>
-     
+
     </div>
 </div>
 {% endblock content %}

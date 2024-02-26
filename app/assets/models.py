@@ -73,7 +73,6 @@ class Monitor(models.Model):
     model = models.ForeignKey(
         MonitorModel, on_delete=models.CASCADE, related_name="monitors"
     )
-    status = models.ForeignKey(Status, on_delete=models.CASCADE, null=True, blank=True)
     date_received = models.DateField(blank=True, null=True)
     date_installed = models.DateField(blank=True, null=True)
     notes = models.TextField(blank=True, null=True)
