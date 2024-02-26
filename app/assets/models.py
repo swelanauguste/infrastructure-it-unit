@@ -3,6 +3,14 @@ from django.db import models
 from django.shortcuts import reverse
 
 
+class Project(models.Model):
+    name = models.CharField(max_length=100)
+    details = models.TextField(blank=True, null=True)
+
+    def __str__(self):
+        return self.name
+
+
 class Location(models.Model):
     name = models.CharField(max_length=100)
     details = models.CharField(max_length=100, blank=True, null=True)
@@ -111,6 +119,9 @@ class ComputerModel(models.Model):
 
 
 class Computer(models.Model):
+    project = models.ForeignKey(
+        Project, on_delete=models.CASCADE, related_name="projects", null=True, blank=True
+    )
     serial_number = models.CharField(max_length=100, blank=True, null=True)
     warranty_info = models.CharField("Warranty", max_length=100)
     computer_name = models.CharField(max_length=100, blank=True, null=True)
@@ -133,7 +144,7 @@ class Computer(models.Model):
         null=True,
         related_name="computer_locations",
     )
-    ip_addr = models.GenericIPAddressField("IP Address", blank=True, null=True)
+    # ip_addr = models.GenericIPAddressField("IP Address", blank=True, null=True)
     department = models.ForeignKey(
         Department,
         on_delete=models.CASCADE,
@@ -164,7 +175,7 @@ class ComputerComment(models.Model):
     computer = models.ForeignKey(
         Computer, on_delete=models.CASCADE, related_name="comments"
     )
-    comment = models.TextField(blank=True, null=True)
+    comment = models.TextField(null=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:

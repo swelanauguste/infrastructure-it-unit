@@ -22,8 +22,8 @@
                     <p>Model: <a href="{{object.model.get_absolute_url}}">
                             {{object.model}}</a></p>
                     <p>Location: {{object.location}}</p>
-                    <p>IP Address: {{object.ip_addr}}</p>
-                    <p>Dept: {{object.dept}}</p>
+                    <!-- <p>IP Address: {{object.ip_addr}}</p> -->
+                    <p>Department: {{object.department}}</p>
                     <p>user: {{object.user}}</p>
                     <p>Status: {{object.status}}</p>
                     <p>Received: {{object.date_received}}</p>
@@ -38,15 +38,12 @@
                 <div class="col">
                     <p>Serial Number: {{object.serial_number}}</p>
                     <p>Processor: {{object.model.processor}}</p>
-                    <p>RAM: {{object.model.ram}} GB</p>
-                    <p>HDD: {{object.model.hdd}} GB</p>
+                    <p>RAM/Stoage: {{object.model.ram}}/{{object.model.hdd}} GB</p>
                     <p>OS: {{object.os}}</p>
                     {% for monitor in object.monitor.all %}
                     <p>Monitor: {{monitor}}</p>
                     {% endfor %}
-                    <p>Keyboard: {{object.keyboard}}</p>
-                    <p>Mouse: {{object.mouse}}</p>
-                    <p>{{object.notes}}</p>
+                    <p>Note: {{object.notes}}</p>
                 </div>
             </div>
         </div>
