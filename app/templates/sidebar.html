@@ -1,69 +1,80 @@
 <div class="flex-shrink-0 p-3"
-    style="width: 280px; height:fit-content;">
-    <a href="/"
-        class="d-flex align-items-center pb-3 mb-3 link-body-emphasis text-decoration-none border-bottom">
-        <span class="fs-5 fw-semibold">IT Unit</span>
-    </a>
-    <ul class="list-unstyled ps-0">
-        <li class="mb-1">
-            <button
-                class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed"
-                data-bs-toggle="collapse"
-                data-bs-target="#home-collapse"
-                aria-expanded="true">
-                Equipment
-            </button>
-            <div class="collapse show"
-                id="home-collapse">
-                <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                    <li><a href="{% url 'computer-list' %}"
-                            class="link-body-emphasis d-inline-flex text-decoration-none rounded">Computers</a>
-                    </li>
-                    <li><a href="{% url 'computer-model-list' %}"
-                            class="link-body-emphasis d-inline-flex text-decoration-none rounded">Computer
-                            models</a>
-                    </li>
-                    <li><a href="{% url 'printer-list' %}"
-                            class="link-body-emphasis d-inline-flex text-decoration-none rounded">Printers</a>
-                    </li>
-                    <li><a href="{% url 'printer-model-list' %}"
-                            class="link-body-emphasis d-inline-flex text-decoration-none rounded">Printer
-                            models</a>
-                    </li>
-                    <li><a href="{% url 'monitor-list' %}"
-                            class="link-body-emphasis d-inline-flex text-decoration-none rounded">Monitors</a>
-                    </li>
-                    <li><a href="{% url 'monitor-model-list' %}"
-                            class="link-body-emphasis d-inline-flex text-decoration-none rounded ">Monitor
-                            models</a>
-                    </li>
-                </ul>
-            </div>
-        </li>
-        <li class="mb-1">
-            <button
-                class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed"
-                data-bs-toggle="collapse"
-                data-bs-target="#dashboard-collapse"
-                aria-expanded="false">
-                Customers
-            </button>
-            <div class="collapse show"
-                id="dashboard-collapse">
-                <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                    <li><a href="{% url 'customer-list' %}"
-                            class="link-body-emphasis d-inline-flex text-decoration-none rounded">Overview</a>
-                    </li>
-                    <li><a href="/"
-                            class="link-body-emphasis d-inline-flex text-decoration-none rounded">New Ticket</a>
-                    </li>
-                    <li><a href="{% url 'ticket-list' %}"
-                            class="link-body-emphasis d-inline-flex text-decoration-none rounded">Tickets</a>
-                    </li>
-                    <li><a href="{% url 'customer-ticket-list' %}"
-                            class="link-body-emphasis d-inline-flex text-decoration-none rounded">Find a ticket</a>
-                    </li>
-                    <!-- <li><a href="#"
+        style="width: 280px; height:fit-content;">
+        <a href="/"
+                class="d-flex align-items-center pb-3 mb-3 link-body-emphasis text-decoration-none border-bottom">
+                <span class="fs-5 fw-semibold">IT Unit</span>
+        </a>
+
+        <ul class="list-unstyled ps-0">
+        {% if request.user.is_authenticated %}
+
+                <li class="mb-1">
+                        <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed"
+                                data-bs-toggle="collapse"
+                                data-bs-target="#home-collapse"
+                                aria-expanded="true">
+                                Equipment
+                        </button>
+                        <div class="collapse show"
+                                id="home-collapse">
+                                <ul
+                                        class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                                        <li><a href="{% url 'computer-list' %}"
+                                                        class="link-body-emphasis d-inline-flex text-decoration-none rounded">Computers</a>
+                                        </li>
+                                        <li><a href="{% url 'computer-model-list' %}"
+                                                        class="link-body-emphasis d-inline-flex text-decoration-none rounded">Computer
+                                                        models</a>
+                                        </li>
+                                        <li><a href="{% url 'printer-list' %}"
+                                                        class="link-body-emphasis d-inline-flex text-decoration-none rounded">Printers</a>
+                                        </li>
+                                        <li><a href="{% url 'printer-model-list' %}"
+                                                        class="link-body-emphasis d-inline-flex text-decoration-none rounded">Printer
+                                                        models</a>
+                                        </li>
+                                        <li><a href="{% url 'monitor-list' %}"
+                                                        class="link-body-emphasis d-inline-flex text-decoration-none rounded">Monitors</a>
+                                        </li>
+                                        <li><a href="{% url 'monitor-model-list' %}"
+                                                        class="link-body-emphasis d-inline-flex text-decoration-none rounded ">Monitor
+                                                        models</a>
+                                        </li>
+                                </ul>
+                        </div>
+                </li>
+                {% endif %}
+
+                <li class="mb-1">
+                        <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed"
+                                data-bs-toggle="collapse"
+                                data-bs-target="#dashboard-collapse"
+                                aria-expanded="false">
+                                Customers
+                        </button>
+                        <div class="collapse show"
+                                id="dashboard-collapse">
+                                <ul
+                                        class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                                        <li><a href="{% url 'customer-list' %}"
+                                                        class="link-body-emphasis d-inline-flex text-decoration-none rounded">Overview</a>
+                                        </li>
+                                        {% if request.user.is_authenticated %}
+                                        <li><a href="{% url 'ticket-list' %}"
+                                                        class="link-body-emphasis d-inline-flex text-decoration-none rounded">Tickets</a>
+                                        </li>
+                                        {% endif %}
+                                        <li><a href="/"
+                                                        class="link-body-emphasis d-inline-flex text-decoration-none rounded">New
+                                                        Ticket</a>
+                                        </li>
+
+                                        <li><a href="{% url 'customer-ticket-list' %}"
+                                                        class="link-body-emphasis d-inline-flex text-decoration-none rounded">Find
+                                                        a ticket</a>
+                                        </li>
+
+                                        <!-- <li><a href="#"
                             class="link-body-emphasis d-inline-flex text-decoration-none rounded">Weekly</a>
                     </li>
                     <li><a href="#"
@@ -71,8 +82,9 @@
                     </li>
                     <li><a href="#"
                             class="link-body-emphasis d-inline-flex text-decoration-none rounded">Annually</a> -->
-        </li>
-    </ul>
+                </li>
+        </ul>
+
 </div>
 </li>
 <!-- <li class="mb-1">
@@ -97,11 +109,10 @@
                     </li>
                     <li><a href="#"
                             class="link-body-emphasis d-inline-flex text-decoration-none rounded">Returned</a> -->
-            <!-- </li>
+<!-- </li>
         </ul>
     </div>
 </li> -->
-<li class="border-top my-3"></li>
 <!-- <li class="mb-1">
     <button
         class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed"
