@@ -134,7 +134,13 @@ class Computer(models.Model):
         related_name="computer_sites",
         verbose_name="location",
     )
-    location = models.CharField(max_length=100, blank=True, null=True)
+    location = models.ForeignKey(
+        Location,
+        on_delete=models.CASCADE,
+        blank=True,
+        null=True,
+        related_name="computer_locations",
+    )
     ip_addr = models.GenericIPAddressField("IP Address", blank=True, null=True)
     department = models.ForeignKey(
         Department,
@@ -143,7 +149,7 @@ class Computer(models.Model):
         null=True,
         related_name="computer_departments",
     )
-    dept = models.CharField("Department", max_length=100, blank=True, null=True)
+    # dept = models.CharField("Department", max_length=100, blank=True, null=True)
     user = models.CharField(max_length=100, blank=True, null=True)
     date_received = models.DateField(blank=True, null=True)
     date_installed = models.DateField(blank=True, null=True)
