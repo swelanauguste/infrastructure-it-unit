@@ -126,14 +126,6 @@ class Computer(models.Model):
         blank=True,
         verbose_name="Operating System",
     )
-    site = models.ForeignKey(
-        Location,
-        on_delete=models.CASCADE,
-        blank=True,
-        null=True,
-        related_name="computer_sites",
-        verbose_name="location",
-    )
     location = models.ForeignKey(
         Location,
         on_delete=models.CASCADE,
