@@ -68,7 +68,6 @@ class ComputerListView(ListView):
                 | Q(status__name__icontains=query)
                 | Q(warranty_info__icontains=query)
                 | Q(location__name__icontains=query)
-                | Q(dept__icontains=query)
             ).distinct()
         return Computer.objects.all()
 
@@ -212,8 +211,6 @@ class MonitorListView(ListView):
                 | Q(model__name__icontains=query)
                 | Q(model__maker__name__icontains=query)
                 | Q(status__name__icontains=query)
-                | Q(location__icontains=query)
-                | Q(dept__icontains=query)
             ).distinct()
         return Monitor.objects.all()
 
