@@ -22,6 +22,7 @@ class Ticket(models.Model):
     user = models.ForeignKey(Customer, on_delete=models.SET_NULL, null=True)
     summary = models.CharField(max_length=100)
     description = models.TextField(blank=True, null=True)
+    file = models.FileField(upload_to="tickets/", blank=True, null=True)
     assigned_to = models.ForeignKey(
         Technician,
         on_delete=models.SET_NULL,

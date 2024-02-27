@@ -36,11 +36,13 @@ def assign_technician_view(request, slug):
 
 def create_ticket_view(request):
     if request.method == "POST":
-        form = TicketCreateForm(request.POST)
+        form = TicketCreateForm(request.POST, request.FILES)
         if form.is_valid():
             email = form.cleaned_data["email"]
             summary = form.cleaned_data["summary"]
             description = form.cleaned_data["description"]
+            file = form.cleaned_data["file"]
+            print(file, "file")
 
             try:
                 customer = Customer.objects.get(email=email)
@@ -52,7 +54,7 @@ def create_ticket_view(request):
                 return render(request, "tickets/create_ticket.html", {"form": form})
 
             ticket = Ticket.objects.create(
-                user=customer, summary=summary, description=description
+                user=customer, summary=summary, file=file, description=description
             )
             ticket.save()
             send_ticket_creation_email(ticket, email)
