@@ -113,7 +113,7 @@ class PrinterListView(ListView):
                 | Q(model__name__icontains=query)
                 | Q(model__maker__name__icontains=query)
                 | Q(status__name__icontains=query)
-                | Q(location__name__icontains=query)
+                # | Q(location__name__icontains=query)
                 | Q(ip_addr__icontains=query)
                 | Q(department__name__icontains=query)
             ).distinct()
