@@ -8,7 +8,7 @@ class Project(models.Model):
     details = models.TextField(blank=True, null=True)
 
     def __str__(self):
-        return self.name
+        return self.name.upper()
 
 
 class Location(models.Model):
@@ -19,7 +19,7 @@ class Location(models.Model):
         ordering = ["name"]
 
     def __str__(self):
-        return self.name
+        return self.name.upper()
 
 
 class Maker(models.Model):
@@ -29,7 +29,7 @@ class Maker(models.Model):
         ordering = ["name"]
 
     def __str__(self):
-        return self.name
+        return self.name.upper()
 
 
 class Status(models.Model):
@@ -40,7 +40,7 @@ class Status(models.Model):
         ordering = ["name"]
 
     def __str__(self):
-        return self.name
+        return self.name.upper()
 
 
 class OperatingSystem(models.Model):
@@ -119,7 +119,11 @@ class ComputerModel(models.Model):
 
 class Computer(models.Model):
     project = models.ForeignKey(
-        Project, on_delete=models.CASCADE, related_name="projects", null=True, blank=True
+        Project,
+        on_delete=models.CASCADE,
+        related_name="projects",
+        null=True,
+        blank=True,
     )
     serial_number = models.CharField(max_length=100, blank=True, null=True)
     warranty_info = models.CharField("Warranty", max_length=100)
@@ -143,7 +147,6 @@ class Computer(models.Model):
         null=True,
         related_name="computer_locations",
     )
-    # ip_addr = models.GenericIPAddressField("IP Address", blank=True, null=True)
     department = models.ForeignKey(
         Department,
         on_delete=models.CASCADE,
@@ -151,7 +154,6 @@ class Computer(models.Model):
         null=True,
         related_name="computer_departments",
     )
-    # dept = models.CharField("Department", max_length=100, blank=True, null=True)
     user = models.CharField(max_length=100, blank=True, null=True)
     date_received = models.DateField(blank=True, null=True)
     date_installed = models.DateField(blank=True, null=True)
@@ -206,15 +208,14 @@ class Printer(models.Model):
         PrinterModel, on_delete=models.CASCADE, related_name="printers"
     )
 
-    site = models.ForeignKey(
+    location = models.ForeignKey(
         Location,
         on_delete=models.CASCADE,
         blank=True,
         null=True,
-        related_name="printer_sites",
-        verbose_name="location",
+        related_name="printer_locations",
     )
-    location = models.CharField(max_length=100, null=True, blank=True)
+    # location = models.CharField(max_length=100, null=True, blank=True)
     ip_addr = models.GenericIPAddressField("IP Address", blank=True, null=True)
     department = models.ForeignKey(
         Department,
@@ -223,7 +224,6 @@ class Printer(models.Model):
         null=True,
         related_name="printer_departments",
     )
-    dept = models.CharField("Department", max_length=100, blank=True, null=True)
     status = models.ForeignKey(Status, on_delete=models.CASCADE)
     date_received = models.DateField(blank=True, null=True)
     date_installed = models.DateField(blank=True, null=True)
@@ -236,4 +236,4 @@ class Printer(models.Model):
         return reverse("printer-detail", kwargs={"pk": self.pk})
 
     def __str__(self):
-        return f"{self.ip_addr} - {self.model.name}"
+        return f"{self.model.maker} - {self.model.name}"

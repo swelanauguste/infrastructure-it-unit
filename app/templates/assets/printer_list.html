@@ -45,7 +45,7 @@
                         </td>
                         <td>{{printer.location|upper}}</td>
                         <td><a target="_blank"
-                                href="http://{{printer.ip_addr}}">{{printer.ip_addr|upper}}</a>
+                                href="http://{{printer.ip_addr}}">{{printer.ip_addr|default:'-'}}</a>
                         </td>
                         <td>{{printer.status}}</td>
                     </tr>

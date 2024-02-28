@@ -7,17 +7,14 @@
     <hr>
     <div class="row">
         <p>Maker: {{object.maker}}</p>
-        <div class="text-end">
-            <a class="text-dark"
-                href="{% url 'monitor-model-update' object.pk %}">Edit</a>
+        <div class="container">
+            <p>Printers</p>
+            <ol>
+                {% for printer in object.printers.all %}
+                <li><a href="">{{printer}}</a></li>
+                {% endfor %}
+            </ol>
         </div>
-        <hr>
-        <p>Monitors</p>
-        <ol>
-            {% for monitor in object.monitors.all %}
-            <li><a href="">{{monitor}}</a></li>
-            {% endfor %}
-        </ol>
     </div>
 </div>
 {% endblock content %}
