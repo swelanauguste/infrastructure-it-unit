@@ -43,7 +43,7 @@
                                 href="{% url 'printer-detail' printer.pk %}">{{printer.model.name|upper}}
                             </a>
                         </td>
-                        <td>{{printer.location|upper}}</td>
+                        <td>{{printer.location}}</td>
                         <td><a target="_blank"
                                 href="http://{{printer.ip_addr}}">{{printer.ip_addr|default:'-'}}</a>
                         </td>
