@@ -34,9 +34,23 @@ from .models import (
 class MicrosoftOfficeListView(ListView):
     model = MicrosoftOffice
 
+    def get_queryset(self):
+        queryset = MicrosoftOffice.objects.filter(is_installed=False)
+        query = self.request.GET.get("microsoft_office_search")
+
+        if query:
+            return MicrosoftOffice.objects.filter(
+                Q(version__name__icontains=query)
+                | Q(product_key__icontains=query.replace("-", ""))
+                | Q(computer__computer_name__icontains=query)
+                | Q(computer__serial_number__icontains=query)
+            ).distinct()
+        return queryset
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["microsoft_office_count"] = MicrosoftOffice.objects.all().count()
+        context["microsoft_office_installed_count"] = MicrosoftOffice.objects.filter(is_installed=True).count()
         context["microsoft_office_update_form"] = MicrosoftOfficeUpdateForm()
         return context
 
@@ -53,7 +67,7 @@ class MicrosoftOfficeDetailView(DetailView):
 class MicrosoftOfficeUpdateView(UpdateView):
     model = MicrosoftOffice
     form_class = MicrosoftOfficeUpdateForm
-    
+
     def form_valid(self, form):
         form.instance.is_installed = True
         return super().form_valid(form)

@@ -3,7 +3,8 @@
 
 {% block content %}
 <div class="p-5 mb-5">
-    <h5>Microsoft Office ({{microsoft_office_count}})</h5>
+    <h5>Microsoft Office
+        ({{microsoft_office_installed_count}}/{{microsoft_office_count}})</h5>
     <hr>
     <div class="col-lg-6 mx-auto py-3">
         <form action=""
@@ -38,6 +39,10 @@
                         <td>{{key.computer|default:'Available'}}</td>
                         <td>{{key.date_installed|default:'Available'}}</td>
                     </tr>
+                    {% empty %}
+                    <td colspan="4">
+                        <p class="text-center">No available keys</p>
+                    </td>
                     {% endfor %}
                 </tbody>
             </table>

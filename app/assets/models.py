@@ -250,7 +250,7 @@ class MicrosoftOffice(models.Model):
     )
     product_key = models.CharField(max_length=30, unique=True)
     computer = models.ForeignKey(
-        Computer, on_delete=models.CASCADE, blank=True, null=True, help_text='serial number'
+        Computer, on_delete=models.CASCADE, blank=True, null=True, help_text='serial number', related_name="office_installations"
     )
     date_installed = models.DateField(blank=True, null=True)
     is_installed = models.BooleanField(default=False)
