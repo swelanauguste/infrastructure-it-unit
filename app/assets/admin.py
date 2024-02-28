@@ -12,7 +12,9 @@ from .models import (
     PrinterModel,
     Status,
     Location,
-    Project
+    Project,
+    MicrosoftOfficeVersion,
+    MicrosoftOffice
 )
 
 admin.site.register(ComputerType)
@@ -27,3 +29,6 @@ admin.site.register(MonitorModel)
 admin.site.register(Monitor)
 admin.site.register(Location)
 admin.site.register(Project)
+admin.site.register(MicrosoftOfficeVersion)
+admin.site.register(MicrosoftOffice)
+

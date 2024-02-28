@@ -235,3 +235,32 @@ class Printer(models.Model):
 
     def __str__(self):
         return f"{self.model.maker} - {self.model.name}"
+
+
+class MicrosoftOfficeVersion(models.Model):
+    name = models.CharField(max_length=20)
+
+    def __str__(self):
+        return self.name
+
+
+class MicrosoftOffice(models.Model):
+    version = models.ForeignKey(
+        MicrosoftOfficeVersion, on_delete=models.CASCADE, related_name="versions"
+    )
+    product_key = models.CharField(max_length=30, unique=True)
+    computer_name = models.ForeignKey(
+        Computer, on_delete=models.CASCADE, blank=True, null=True
+    )
+    date_installed = models.DateField(blank=True, null=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        ordering = ["-date_installed"]
+
+    def get_absolute_url(self):
+        return reverse("office-detail", kwargs={"pk": self.pk})
+
+    def __str__(self):
+        return f"{self.version} - {self.product_key[-5:]}"
