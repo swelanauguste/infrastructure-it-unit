@@ -207,14 +207,13 @@ class Printer(models.Model):
     model = models.ForeignKey(
         PrinterModel, on_delete=models.CASCADE, related_name="printers"
     )
-
-    # location = models.ForeignKey(
-    #     Location,
-    #     on_delete=models.CASCADE,
-    #     blank=True,
-    #     null=True,
-    #     related_name="printer_locations",
-    # )
+    location = models.ForeignKey(
+        Location,
+        on_delete=models.CASCADE,
+        blank=True,
+        null=True,
+        related_name="printer_locations",
+    )
     ip_addr = models.GenericIPAddressField("IP Address", blank=True, null=True)
     department = models.ForeignKey(
         Department,
