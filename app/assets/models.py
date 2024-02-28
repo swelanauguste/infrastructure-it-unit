@@ -167,9 +167,9 @@ class Computer(models.Model):
         return reverse("computer-detail", kwargs={"pk": self.pk})
 
     def __str__(self):
-        if self.computer_name:
-            return self.computer_name
-        return f"N/A"
+        if self.serial_number:
+            return self.serial_number
+        return self.computer_name
 
 
 class ComputerComment(models.Model):
@@ -241,7 +241,7 @@ class MicrosoftOfficeVersion(models.Model):
     name = models.CharField(max_length=20)
 
     def __str__(self):
-        return self.name
+        return f"Microsoft Office {self.name}"
 
 
 class MicrosoftOffice(models.Model):
@@ -249,10 +249,11 @@ class MicrosoftOffice(models.Model):
         MicrosoftOfficeVersion, on_delete=models.CASCADE, related_name="versions"
     )
     product_key = models.CharField(max_length=30, unique=True)
-    computer_name = models.ForeignKey(
-        Computer, on_delete=models.CASCADE, blank=True, null=True
+    computer = models.ForeignKey(
+        Computer, on_delete=models.CASCADE, blank=True, null=True, help_text='serial number'
     )
     date_installed = models.DateField(blank=True, null=True)
+    is_installed = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -260,7 +261,10 @@ class MicrosoftOffice(models.Model):
         ordering = ["-date_installed"]
 
     def get_absolute_url(self):
-        return reverse("office-detail", kwargs={"pk": self.pk})
+        return reverse("microsoft-office-detail", kwargs={"pk": self.pk})
+
+    def remove_hyphens(self):
+        return self.product_key.replace("-", "")
 
     def __str__(self):
-        return f"{self.version} - {self.product_key[-5:]}"
+        return f"{self.version} - XXXXX-XXXXX-XXXXX-{self.product_key[-11:]}"

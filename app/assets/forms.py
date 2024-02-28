@@ -1,13 +1,26 @@
 from django import forms
 
-from .models import Computer, ComputerComment, Monitor, Printer
+from .models import Computer, ComputerComment, MicrosoftOffice, Monitor, Printer
+
+
+class MicrosoftOfficeUpdateForm(forms.ModelForm):
+    class Meta:
+        model = MicrosoftOffice
+        fields = ["computer", "date_installed"]
+        widgets = {"date_installed": forms.DateInput(attrs={"type": "date"})}
 
 
 class CommentCreateForm(forms.ModelForm):
     class Meta:
         model = ComputerComment
         fields = ["comment"]
-        widgets = {"comment": forms.Textarea(attrs={"rows": 4,})}
+        widgets = {
+            "comment": forms.Textarea(
+                attrs={
+                    "rows": 4,
+                }
+            )
+        }
 
 
 class PrinterForm(forms.ModelForm):

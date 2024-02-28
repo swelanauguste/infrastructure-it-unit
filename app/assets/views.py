@@ -9,19 +9,54 @@ from django.views.generic import (
     UpdateView,
 )
 
-from .forms import CommentCreateForm, ComputerForm, MonitorForm, PrinterForm
+from .forms import (
+    CommentCreateForm,
+    ComputerForm,
+    MicrosoftOfficeUpdateForm,
+    MonitorForm,
+    PrinterForm,
+)
 from .models import (
     Computer,
     ComputerComment,
     ComputerModel,
     ComputerType,
     Maker,
+    MicrosoftOffice,
     Monitor,
     MonitorModel,
     Printer,
     PrinterModel,
     Status,
 )
+
+
+class MicrosoftOfficeListView(ListView):
+    model = MicrosoftOffice
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["microsoft_office_count"] = MicrosoftOffice.objects.all().count()
+        context["microsoft_office_update_form"] = MicrosoftOfficeUpdateForm()
+        return context
+
+
+class MicrosoftOfficeDetailView(DetailView):
+    model = MicrosoftOffice
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["microsoft_office_update_form"] = MicrosoftOfficeUpdateForm()
+        return context
+
+
+class MicrosoftOfficeUpdateView(UpdateView):
+    model = MicrosoftOffice
+    form_class = MicrosoftOfficeUpdateForm
+    
+    def form_valid(self, form):
+        form.instance.is_installed = True
+        return super().form_valid(form)
 
 
 def add_computer_comment_view(request, pk):
@@ -122,7 +157,7 @@ class PrinterListView(ListView):
 
 class PrinterModelListView(ListView):
     model = PrinterModel
-    
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["printer_model_count"] = PrinterModel.objects.all().count()
