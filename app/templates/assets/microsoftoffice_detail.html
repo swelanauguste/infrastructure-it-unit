@@ -17,7 +17,7 @@
                 content_copy
             </span>
         </p>
-        <p>Computer: {{object.computer|default:'Not installed'}}</p>
+        <p>Computer: <a href="{{object.computer.get_absolute_url}}">{{object.computer|default:'Not installed'}}</a></p>
         <p>Installed: {{object.date_installed|default:'Not installed'}}</p>
         <span hidden
             id="getProductKey"
