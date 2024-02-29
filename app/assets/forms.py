@@ -6,8 +6,11 @@ from .models import Computer, ComputerComment, MicrosoftOffice, Monitor, Printer
 class MicrosoftOfficeUpdateForm(forms.ModelForm):
     class Meta:
         model = MicrosoftOffice
-        fields = ["computer", "date_installed"]
-        widgets = {"date_installed": forms.DateInput(attrs={"type": "date"})}
+        fields = ["computer", "date_installed", "comments"]
+        widgets = {
+            "date_installed": forms.DateInput(attrs={"type": "date"}),
+            "comments": forms.Textarea(attrs={"rows": 2}),
+        }
 
 
 class CommentCreateForm(forms.ModelForm):
@@ -17,7 +20,7 @@ class CommentCreateForm(forms.ModelForm):
         widgets = {
             "comment": forms.Textarea(
                 attrs={
-                    "rows": 4,
+                    "rows": 2,
                 }
             )
         }

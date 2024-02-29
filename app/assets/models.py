@@ -253,6 +253,7 @@ class MicrosoftOffice(models.Model):
         Computer, on_delete=models.CASCADE, blank=True, null=True, help_text='serial number', related_name="office_installations"
     )
     date_installed = models.DateField(blank=True, null=True)
+    comments = models.TextField(blank=True, null=True)
     is_installed = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
