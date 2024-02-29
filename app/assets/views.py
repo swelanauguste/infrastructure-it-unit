@@ -1,3 +1,5 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.messages.views import SuccessMessageMixin
 from django.db.models import Q
 from django.shortcuts import get_object_or_404, redirect, render
 from django.views.generic import (
@@ -31,7 +33,7 @@ from .models import (
 )
 
 
-class MicrosoftOfficeListView(ListView):
+class MicrosoftOfficeListView(LoginRequiredMixin, ListView):
     model = MicrosoftOffice
 
     def get_queryset(self):
@@ -50,12 +52,14 @@ class MicrosoftOfficeListView(ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["microsoft_office_count"] = MicrosoftOffice.objects.all().count()
-        context["microsoft_office_installed_count"] = MicrosoftOffice.objects.filter(is_installed=True).count()
+        context["microsoft_office_installed_count"] = MicrosoftOffice.objects.filter(
+            is_installed=True
+        ).count()
         context["microsoft_office_update_form"] = MicrosoftOfficeUpdateForm()
         return context
 
 
-class MicrosoftOfficeDetailView(DetailView):
+class MicrosoftOfficeDetailView(LoginRequiredMixin, DetailView):
     model = MicrosoftOffice
 
     def get_context_data(self, **kwargs):
@@ -64,9 +68,10 @@ class MicrosoftOfficeDetailView(DetailView):
         return context
 
 
-class MicrosoftOfficeUpdateView(UpdateView):
+class MicrosoftOfficeUpdateView(LoginRequiredMixin, SuccessMessageMixin,UpdateView):
     model = MicrosoftOffice
     form_class = MicrosoftOfficeUpdateForm
+    success_message = "Assigned to  %(computer)s"
 
     def form_valid(self, form):
         form.instance.is_installed = True

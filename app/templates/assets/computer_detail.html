@@ -52,6 +52,7 @@
             </div>
         </div>
         <br>
+        {% if object.comments.all %}
         <div class="col px-5">
             <h3>Comments</h3>
             {% for comment in object.comments.all %}
@@ -62,8 +63,9 @@
             </p>
             {% endfor %}
         </div>
-
+        {% endif %}
     </div>
+    <br>
     <div class="col-lg-6">
         <form method="post"
             action="{% url 'add-computer-comment' object.pk %}">
@@ -76,4 +78,5 @@
         </form>
     </div>
 </div>
+
 {% endblock content %}
