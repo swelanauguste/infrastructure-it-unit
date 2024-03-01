@@ -68,13 +68,18 @@ class MicrosoftOfficeDetailView(LoginRequiredMixin, DetailView):
         return context
 
 
-class MicrosoftOfficeUpdateView(LoginRequiredMixin, SuccessMessageMixin,UpdateView):
+class MicrosoftOfficeUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
     model = MicrosoftOffice
     form_class = MicrosoftOfficeUpdateForm
     success_message = "Assigned to  %(computer)s"
 
     def form_valid(self, form):
-        form.instance.is_installed = True
+        if form.instance.date_installed and not form.cleaned_data.get('has_failed', False):
+            form.instance.is_installed = True
+            form.instance.has_failed = False  # Explicitly setting this in case of re-activation attempts
+        else:
+            form.instance.is_installed = False
+            form.instance.has_failed = True
         return super().form_valid(form)
 
 
@@ -264,7 +269,6 @@ class MonitorListView(ListView):
                 Q(serial_number__icontains=query)
                 | Q(model__name__icontains=query)
                 | Q(model__maker__name__icontains=query)
-                | Q(status__name__icontains=query)
             ).distinct()
         return Monitor.objects.all()
 

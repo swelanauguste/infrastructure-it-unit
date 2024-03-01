@@ -17,15 +17,17 @@
                 content_copy
             </span>
         </p>
-        <p>Computer: <a href="{{object.computer.get_absolute_url}}">{{object.computer|default:'Not installed'}}</a></p>
+        <p>Computer: <a href="{{object.computer.get_absolute_url}}">
+                {{object.computer|default:'Not installed'}}</a></p>
         <p>Installed: {{object.date_installed|default:'Not installed'}}</p>
+        <p>Comments: {{object.comments}}</p>
         <span hidden
             id="getProductKey"
             value="{{object.remove_hyphens}}">
             {{object.remove_hyphens}}</span>
+        {% if not object.is_installed %}
         <hr>
 
-        {% if not object.is_installed %}
         <form action="{% url 'microsoft-office-update' object.pk %}"
             method="post">
             {% csrf_token %}
