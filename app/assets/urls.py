@@ -9,6 +9,9 @@ from .views import (
     ComputerModelListView,
     ComputerModelUpdateView,
     ComputerUpdateView,
+    MicrosoftOfficeDetailView,
+    MicrosoftOfficeListView,
+    MicrosoftOfficeUpdateView,
     MonitorCreateView,
     MonitorDetailView,
     MonitorListView,
@@ -43,7 +46,11 @@ urlpatterns = [
         ComputerUpdateView.as_view(),
         name="computer-update",
     ),
-    path("computer/add-comment/<int:pk>/", add_computer_comment_view, name="add-computer-comment"),
+    path(
+        "computer/add-comment/<int:pk>/",
+        add_computer_comment_view,
+        name="add-computer-comment",
+    ),
     path("add/computer/", ComputerCreateView.as_view(), name="computer-create"),
     path(
         "computer-model/detail/<int:pk>/",
@@ -115,5 +122,20 @@ urlpatterns = [
         "add/monitor-model/",
         MonitorModelCreateView.as_view(),
         name="monitor-model-create",
+    ),
+    path(
+        "microsoft-office/",
+        MicrosoftOfficeListView.as_view(),
+        name="microsoft-office-list",
+    ),
+    path(
+        "microsoft-office/detail/<int:pk>/",
+        MicrosoftOfficeDetailView.as_view(),
+        name="microsoft-office-detail",
+    ),
+    path(
+        "microsoft-office/update/<int:pk>/",
+        MicrosoftOfficeUpdateView.as_view(),
+        name="microsoft-office-update",
     ),
 ]

@@ -9,17 +9,40 @@ from django.template.loader import render_to_string
 from django.urls import reverse
 from django.utils.html import strip_tags
 from django.views.generic import CreateView, DetailView, ListView, UpdateView
+from technicians.models import Technician
 
-from .forms import CommentCreateForm, TicketCreateForm
+from .forms import CommentCreateForm, TicketAssignTechnicianForm, TicketCreateForm
 from .models import Comment, Ticket
+
+
+def assign_technician_view(request, slug):
+    ticket = get_object_or_404(Ticket, slug=slug)
+
+    if request.method == "POST":
+        form = TicketAssignTechnicianForm(request.POST)
+        if form.is_valid():
+            technician_id = form.cleaned_data["technician_id"]
+            technician = get_object_or_404(Technician, id=technician_id.id)
+            ticket.assigned_to = technician
+            ticket.save()
+            return redirect("ticket-detail", slug=ticket.slug)
+    else:
+        form = AssignTechnicianForm()
+
+    return render(
+        request, "tickets/assign_technician.html", {"form": form, "ticket": ticket}
+    )
 
 
 def create_ticket_view(request):
     if request.method == "POST":
-        form = TicketCreateForm(request.POST)
+        form = TicketCreateForm(request.POST, request.FILES)
         if form.is_valid():
             email = form.cleaned_data["email"]
+            summary = form.cleaned_data["summary"]
             description = form.cleaned_data["description"]
+            file = form.cleaned_data["file"]
+            print(file, "file")
 
             try:
                 customer = Customer.objects.get(email=email)
@@ -30,7 +53,9 @@ def create_ticket_view(request):
                 )
                 return render(request, "tickets/create_ticket.html", {"form": form})
 
-            ticket = Ticket.objects.create(user=customer, description=description)
+            ticket = Ticket.objects.create(
+                user=customer, summary=summary, file=file, description=description
+            )
             ticket.save()
             send_ticket_creation_email(ticket, email)
             messages.success(request, "Ticket was created successfully")
@@ -87,6 +112,7 @@ class TicketDetailView(DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["comment_form"] = CommentCreateForm()
+        context["assign_technician_form"] = TicketAssignTechnicianForm()
         return context
 
 

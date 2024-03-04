@@ -3,6 +3,14 @@ from django.db import models
 from django.shortcuts import reverse
 
 
+class Project(models.Model):
+    name = models.CharField(max_length=100)
+    details = models.TextField(blank=True, null=True)
+
+    def __str__(self):
+        return self.name.upper()
+
+
 class Location(models.Model):
     name = models.CharField(max_length=100)
     details = models.CharField(max_length=100, blank=True, null=True)
@@ -11,7 +19,7 @@ class Location(models.Model):
         ordering = ["name"]
 
     def __str__(self):
-        return self.name
+        return self.name.upper()
 
 
 class Maker(models.Model):
@@ -21,7 +29,7 @@ class Maker(models.Model):
         ordering = ["name"]
 
     def __str__(self):
-        return self.name
+        return self.name.upper()
 
 
 class Status(models.Model):
@@ -32,7 +40,7 @@ class Status(models.Model):
         ordering = ["name"]
 
     def __str__(self):
-        return self.name
+        return self.name.upper()
 
 
 class OperatingSystem(models.Model):
@@ -62,24 +70,12 @@ class MonitorModel(models.Model):
 
 class Monitor(models.Model):
     serial_number = models.CharField(max_length=100, blank=True, null=True)
-    monitor_name = models.CharField(max_length=100, blank=True, null=True)
     model = models.ForeignKey(
         MonitorModel, on_delete=models.CASCADE, related_name="monitors"
     )
-    site = models.ForeignKey(
-        Location,
-        on_delete=models.CASCADE,
-        blank=True,
-        null=True,
-        related_name="monitor_sites",
-        verbose_name="location",
-    )
-    location = models.CharField(max_length=100, null=True, blank=True)
-    dept = models.CharField(max_length=100, blank=True, null=True)
-    status = models.ForeignKey(Status, on_delete=models.CASCADE)
     date_received = models.DateField(blank=True, null=True)
     date_installed = models.DateField(blank=True, null=True)
-    notes = models.TextField(blank=True, null=True, help_text="Warranty Information")
+    notes = models.TextField(blank=True, null=True)
 
     class Meta:
         ordering = ["model__name"]
@@ -88,7 +84,7 @@ class Monitor(models.Model):
         return reverse("monitor-detail", kwargs={"pk": self.pk})
 
     def __str__(self):
-        return f"{self.model.name} - {self.dept}"
+        return f"{self.model.name} - {self.serial_number}"
 
 
 class ComputerType(models.Model):
@@ -122,6 +118,13 @@ class ComputerModel(models.Model):
 
 
 class Computer(models.Model):
+    project = models.ForeignKey(
+        Project,
+        on_delete=models.CASCADE,
+        related_name="projects",
+        null=True,
+        blank=True,
+    )
     serial_number = models.CharField(max_length=100, blank=True, null=True)
     warranty_info = models.CharField("Warranty", max_length=100)
     computer_name = models.CharField(max_length=100, blank=True, null=True)
@@ -137,16 +140,13 @@ class Computer(models.Model):
         blank=True,
         verbose_name="Operating System",
     )
-    site = models.ForeignKey(
+    location = models.ForeignKey(
         Location,
         on_delete=models.CASCADE,
         blank=True,
         null=True,
-        related_name="computer_sites",
-        verbose_name="location",
+        related_name="computer_locations",
     )
-    location = models.CharField(max_length=100, blank=True, null=True)
-    ip_addr = models.GenericIPAddressField("IP Address", blank=True, null=True)
     department = models.ForeignKey(
         Department,
         on_delete=models.CASCADE,
@@ -154,7 +154,6 @@ class Computer(models.Model):
         null=True,
         related_name="computer_departments",
     )
-    dept = models.CharField("Department", max_length=100, blank=True, null=True)
     user = models.CharField(max_length=100, blank=True, null=True)
     date_received = models.DateField(blank=True, null=True)
     date_installed = models.DateField(blank=True, null=True)
@@ -168,16 +167,16 @@ class Computer(models.Model):
         return reverse("computer-detail", kwargs={"pk": self.pk})
 
     def __str__(self):
-        if self.computer_name:
-            return self.computer_name
-        return f"N/A"
+        if self.serial_number:
+            return self.serial_number
+        return self.computer_name
 
 
 class ComputerComment(models.Model):
     computer = models.ForeignKey(
         Computer, on_delete=models.CASCADE, related_name="comments"
     )
-    comment = models.TextField(blank=True, null=True)
+    comment = models.TextField(null=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
@@ -208,17 +207,14 @@ class Printer(models.Model):
     model = models.ForeignKey(
         PrinterModel, on_delete=models.CASCADE, related_name="printers"
     )
-
-    site = models.ForeignKey(
+    ip_addr = models.GenericIPAddressField("IP Address", blank=True, null=True)
+    location = models.ForeignKey(
         Location,
         on_delete=models.CASCADE,
         blank=True,
         null=True,
-        related_name="printer_sites",
-        verbose_name="location",
+        related_name="printer_locations",
     )
-    location = models.CharField(max_length=100, null=True, blank=True)
-    ip_addr = models.GenericIPAddressField("IP Address", blank=True, null=True)
     department = models.ForeignKey(
         Department,
         on_delete=models.CASCADE,
@@ -226,7 +222,6 @@ class Printer(models.Model):
         null=True,
         related_name="printer_departments",
     )
-    dept = models.CharField("Department", max_length=100, blank=True, null=True)
     status = models.ForeignKey(Status, on_delete=models.CASCADE)
     date_received = models.DateField(blank=True, null=True)
     date_installed = models.DateField(blank=True, null=True)
@@ -239,4 +234,39 @@ class Printer(models.Model):
         return reverse("printer-detail", kwargs={"pk": self.pk})
 
     def __str__(self):
-        return f"{self.ip_addr} - {self.model.name}"
+        return f"{self.model.maker} - {self.model.name}"
+
+
+class MicrosoftOfficeVersion(models.Model):
+    name = models.CharField(max_length=20)
+
+    def __str__(self):
+        return f"Microsoft Office {self.name}"
+
+
+class MicrosoftOffice(models.Model):
+    version = models.ForeignKey(
+        MicrosoftOfficeVersion, on_delete=models.CASCADE, related_name="versions"
+    )
+    product_key = models.CharField(max_length=30, unique=True)
+    computer = models.ForeignKey(
+        Computer, on_delete=models.CASCADE, blank=True, null=True, help_text='serial number', related_name="office_installations"
+    )
+    date_installed = models.DateField(blank=True, null=True)
+    comments = models.TextField(blank=True, null=True)
+    is_installed = models.BooleanField(default=False)
+    has_failed = models.BooleanField(default=False)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        ordering = ["-date_installed"]
+
+    def get_absolute_url(self):
+        return reverse("microsoft-office-detail", kwargs={"pk": self.pk})
+
+    def remove_hyphens(self):
+        return self.product_key.replace("-", "")
+
+    def __str__(self):
+        return f"{self.version} - XXXXX-XXXXX-XXXXX-{self.product_key[-11:]}"

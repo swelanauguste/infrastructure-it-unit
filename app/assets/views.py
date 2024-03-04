@@ -1,3 +1,5 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.messages.views import SuccessMessageMixin
 from django.db.models import Q
 from django.shortcuts import get_object_or_404, redirect, render
 from django.views.generic import (
@@ -9,19 +11,76 @@ from django.views.generic import (
     UpdateView,
 )
 
-from .forms import CommentCreateForm, ComputerForm, MonitorForm, PrinterForm
+from .forms import (
+    CommentCreateForm,
+    ComputerForm,
+    MicrosoftOfficeUpdateForm,
+    MonitorForm,
+    PrinterForm,
+)
 from .models import (
     Computer,
     ComputerComment,
     ComputerModel,
     ComputerType,
     Maker,
+    MicrosoftOffice,
     Monitor,
     MonitorModel,
     Printer,
     PrinterModel,
     Status,
 )
+
+
+class MicrosoftOfficeListView(LoginRequiredMixin, ListView):
+    model = MicrosoftOffice
+
+    def get_queryset(self):
+        queryset = MicrosoftOffice.objects.filter(is_installed=False)
+        query = self.request.GET.get("microsoft_office_search")
+
+        if query:
+            return MicrosoftOffice.objects.filter(
+                Q(version__name__icontains=query)
+                | Q(product_key__icontains=query.replace("-", ""))
+                | Q(computer__computer_name__icontains=query)
+                | Q(computer__serial_number__icontains=query)
+            ).distinct()
+        return queryset
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["microsoft_office_count"] = MicrosoftOffice.objects.all().count()
+        context["microsoft_office_installed_count"] = MicrosoftOffice.objects.filter(
+            is_installed=True
+        ).count()
+        context["microsoft_office_update_form"] = MicrosoftOfficeUpdateForm()
+        return context
+
+
+class MicrosoftOfficeDetailView(LoginRequiredMixin, DetailView):
+    model = MicrosoftOffice
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["microsoft_office_update_form"] = MicrosoftOfficeUpdateForm()
+        return context
+
+
+class MicrosoftOfficeUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
+    model = MicrosoftOffice
+    form_class = MicrosoftOfficeUpdateForm
+    success_message = "Assigned to  %(computer)s"
+
+    def form_valid(self, form):
+        if form.instance.date_installed and not form.cleaned_data.get('has_failed', False):
+            form.instance.is_installed = True
+            form.instance.has_failed = False  # Explicitly setting this in case of re-activation attempts
+        else:
+            form.instance.is_installed = False
+            form.instance.has_failed = True
+        return super().form_valid(form)
 
 
 def add_computer_comment_view(request, pk):
@@ -67,8 +126,7 @@ class ComputerListView(ListView):
                 | Q(user__icontains=query)
                 | Q(status__name__icontains=query)
                 | Q(warranty_info__icontains=query)
-                | Q(location__icontains=query)
-                | Q(dept__icontains=query)
+                | Q(location__name__icontains=query)
             ).distinct()
         return Computer.objects.all()
 
@@ -114,16 +172,16 @@ class PrinterListView(ListView):
                 | Q(model__name__icontains=query)
                 | Q(model__maker__name__icontains=query)
                 | Q(status__name__icontains=query)
-                | Q(location__icontains=query)
+                # | Q(location__name__icontains=query)
                 | Q(ip_addr__icontains=query)
-                | Q(dept__icontains=query)
+                | Q(department__name__icontains=query)
             ).distinct()
         return Printer.objects.all()
 
 
 class PrinterModelListView(ListView):
     model = PrinterModel
-    
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["printer_model_count"] = PrinterModel.objects.all().count()
@@ -209,12 +267,8 @@ class MonitorListView(ListView):
         if query:
             return Monitor.objects.filter(
                 Q(serial_number__icontains=query)
-                | Q(monitor_name__icontains=query)
                 | Q(model__name__icontains=query)
                 | Q(model__maker__name__icontains=query)
-                | Q(status__name__icontains=query)
-                | Q(location__icontains=query)
-                | Q(dept__icontains=query)
             ).distinct()
         return Monitor.objects.all()
 

@@ -6,6 +6,7 @@ from .views import (
     TicketListView,
     add_comment_view,
     create_ticket_view,
+    assign_technician_view
 )
 
 urlpatterns = [
@@ -13,5 +14,6 @@ urlpatterns = [
     path("tickets/", CustomerTicketListView.as_view(), name="customer-ticket-list"),
     path("customer/ticket/", TicketListView.as_view(), name="ticket-list"),
     path("tickets/<slug:slug>/", TicketDetailView.as_view(), name="ticket-detail"),
+     path('assign-technician/<slug:slug>/', assign_technician_view, name='assign-technician'),
     path("ticket/add-comment/<slug:slug>/", add_comment_view, name="add-comment"),
 ]
