@@ -14,7 +14,7 @@ from .models import (
     OperatingSystem,
     Printer,
     PrinterModel,
-    Project,
+    # Project,
     Status,
 )
 
@@ -29,7 +29,7 @@ admin.site.register(OperatingSystem)
 admin.site.register(MonitorModel)
 admin.site.register(Monitor)
 admin.site.register(Location)
-admin.site.register(Project)
+# admin.site.register(Project)
 admin.site.register(MicrosoftOfficeVersion)
 admin.site.register(MicrosoftOffice)
 admin.site.register(ComputerComment)

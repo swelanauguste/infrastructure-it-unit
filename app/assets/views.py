@@ -11,6 +11,7 @@ from django.views.generic import (
     UpdateView,
 )
 
+from .filters import ComputerFilter, PrinterFilter
 from .forms import (
     CommentCreateForm,
     ComputerForm,
@@ -31,6 +32,16 @@ from .models import (
     PrinterModel,
     Status,
 )
+
+
+def computer_filter_view(request):
+    f = ComputerFilter(request.GET, queryset=Computer.objects.all())
+    return render(request, "assets/computer_filter.html", {"filter": f})
+
+
+def printer_filter_view(request):
+    f = PrinterFilter(request.GET, queryset=Printer.objects.none())
+    return render(request, "assets/printer_filter.html", {"filter": f})
 
 
 class MicrosoftOfficeListView(LoginRequiredMixin, ListView):
@@ -74,9 +85,13 @@ class MicrosoftOfficeUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateV
     success_message = "Assigned to  %(computer)s"
 
     def form_valid(self, form):
-        if form.instance.date_installed and not form.cleaned_data.get('has_failed', False):
+        if form.instance.date_installed and not form.cleaned_data.get(
+            "has_failed", False
+        ):
             form.instance.is_installed = True
-            form.instance.has_failed = False  # Explicitly setting this in case of re-activation attempts
+            form.instance.has_failed = (
+                False  # Explicitly setting this in case of re-activation attempts
+            )
         else:
             form.instance.is_installed = False
             form.instance.has_failed = True
@@ -127,6 +142,8 @@ class ComputerListView(ListView):
                 | Q(status__name__icontains=query)
                 | Q(warranty_info__icontains=query)
                 | Q(location__name__icontains=query)
+                | Q(department__name__icontains=query)
+                | Q(projectname__name__icontains=query)
             ).distinct()
         return Computer.objects.all()
 
@@ -172,7 +189,7 @@ class PrinterListView(ListView):
                 | Q(model__name__icontains=query)
                 | Q(model__maker__name__icontains=query)
                 | Q(status__name__icontains=query)
-                # | Q(location__name__icontains=query)
+                | Q(location__name__icontains=query)
                 | Q(ip_addr__icontains=query)
                 | Q(department__name__icontains=query)
             ).distinct()

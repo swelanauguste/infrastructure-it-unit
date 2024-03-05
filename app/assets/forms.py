@@ -50,6 +50,7 @@ class ComputerForm(forms.ModelForm):
     class Meta:
         model = Computer
         fields = "__all__"
+        # exclude = ["project_name"]
         widgets = {
             "date_received": forms.DateInput(attrs={"type": "date"}),
             "date_installed": forms.DateInput(attrs={"type": "date"}),

@@ -1,30 +1,19 @@
 {% extends 'base.html' %}
 
+{% load crispy_forms_tags %}
 
 {% block content %}
 <div class="p-5 mb-5">
-    <div class="d-flex justify-content-start align-items-center">
-        <h1>Computers ({{computer_count}})</h1>
-        <a href="{% url 'computer-create' %}">
-            <span class="ms-5 fs-3 text-success material-symbols-outlined">
-                add_box
-            </span>
-        </a>
-    </div>
+    <h1>Computer Filter</h1>
     <hr>
-    <div class="col-lg-6 mx-auto py-3">
-        <form action=""
-            method="get">
-            <input class="form-control form-control-lg rounded-4"
-                type="search"
-                name="computers"
-                placeholder="Search computer..."
-                id="">
+    <div class="col-lg-4">
+        <form method="get">
+            {{ filter.form|crispy }}
+            <div class="d-grid">
+                <input class="btn btn-dark rounded-4"
+                    type="submit" />
+            </div>
         </form>
-        <div class="text-end small">
-            <a class=" text-muted me-2"
-                href="{% url 'computer-filter' %}">Advance filter</a>
-        </div>
     </div>
     <br>
     <section>
@@ -62,7 +51,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    {% for computer in object_list %}
+                    {% for computer in filter.qs %}
                     <tr>
                         <th scope="row">{{forloop.counter}}</th>
                         <td><a class="text-dark"

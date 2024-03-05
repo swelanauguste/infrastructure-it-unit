@@ -8,7 +8,7 @@ class Project(models.Model):
     details = models.TextField(blank=True, null=True)
 
     def __str__(self):
-        return self.name.upper()
+        return self.name
 
 
 class Location(models.Model):
