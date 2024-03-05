@@ -143,7 +143,7 @@ class ComputerListView(ListView):
                 | Q(warranty_info__icontains=query)
                 | Q(location__name__icontains=query)
                 | Q(department__name__icontains=query)
-                | Q(projectname__name__icontains=query)
+                | Q(project__name__icontains=query)
             ).distinct()
         return Computer.objects.all()
 
