@@ -158,6 +158,7 @@ EMAIL_HOST_PASSWORD = os.environ.get("PASS")
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_USE_SSL = False
+DEFAULT_FROM_EMAIL = "kingship.lc@gmail.com"
 
 SITE_ID = 1
 
