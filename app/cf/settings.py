@@ -157,7 +157,7 @@ EMAIL_HOST_USER = os.environ.get("EMAIL")
 EMAIL_HOST_PASSWORD = os.environ.get("PASS")
 EMAIL_PORT = 587
 EMAIL_USE_TLS = False
-EMAIL_USE_SSL = True
+EMAIL_USE_SSL = False
 
 SITE_ID = 1
 
