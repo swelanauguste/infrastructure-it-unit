@@ -11,8 +11,13 @@ from django.utils.html import strip_tags
 from django.views.generic import CreateView, DetailView, ListView, UpdateView
 from technicians.models import Technician
 
-from .forms import CommentCreateForm, TicketAssignTechnicianForm, TicketCreateForm
+from .forms import CommentCreateForm, TicketCreateForm, TicketUpdateForm, TicketAssignTechnicianForm
 from .models import Comment, Ticket
+
+
+class TicketUpdateView(UpdateView):
+    model = Ticket
+    form_class = TicketUpdateForm
 
 
 def assign_technician_view(request, slug):

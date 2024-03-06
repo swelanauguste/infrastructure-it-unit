@@ -4,6 +4,16 @@ from technicians.models import Technician
 from .models import Comment, Ticket
 
 
+class TicketUpdateForm(forms.ModelForm):
+    class Meta:
+        model = Ticket
+        fields = "__all__"
+        widgets = {
+            "status": forms.Select(attrs={"class": "form-control"}),
+            "technician": forms.Select(attrs={"class": "form-control"}),
+        }
+
+
 class TicketAssignTechnicianForm(forms.Form):
     technician_id = forms.ModelChoiceField(
         queryset=Technician.objects.all(), empty_label="Select Technician"
@@ -15,7 +25,6 @@ class TicketCreateForm(forms.Form):
     file = forms.FileField(required=False, widget=forms.ClearableFileInput())
     email = forms.EmailField(max_length=100)
     description = forms.CharField(widget=forms.Textarea)
-
 
 
 class CommentCreateForm(forms.ModelForm):

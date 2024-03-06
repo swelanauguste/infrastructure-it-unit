@@ -3,17 +3,20 @@
 {% load crispy_forms_tags %}
 
 {% block content %}
-<div class="container py-5 mb-5">
+<div class="p-5 m-5">
     <h1>Add Printer Model</h1>
     <hr>
-    <form action=""
-        method="post">
-        {% csrf_token %}
-        {{ form|crispy }}
-        <div class="d-grid">
-            <button class="btn btn-dark"
-                type="submit">Submit</button>
-        </div>
-    </form>
+    <div class="col-lg-4 p-5 rounded-4 border border-dark">
+        <form action=""
+            method="post">
+            {% csrf_token %}
+            {{ form|crispy }}
+            <br>
+            <div class="d-grid">
+                <button class="btn btn-lg btn-dark rounded-4"
+                    type="submit">Submit</button>
+            </div>
+        </form>
+    </div>
 </div>
 {% endblock content %}

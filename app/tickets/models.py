@@ -14,9 +14,37 @@ def generate_short_id():
     return "".join(random.choice(characters) for i in range(length)).upper()
 
 
+class TicketStatus(models.Model):
+    name = models.CharField(max_length=100)
+
+    class Meta:
+        ordering = ["name"]
+        verbose_name_plural = "Ticket Statuses"
+
+    def __str__(self):
+        return self.name
+
+
+class TicketCategory(models.Model):
+    name = models.CharField(max_length=100)
+
+    class Meta:
+        ordering = ["name"]
+        verbose_name_plural = "Ticket Categories"
+
+    def __str__(self):
+        return self.name
+
+
 class Ticket(models.Model):
     ticket_id = models.CharField(
         default=generate_short_id, editable=False, unique=True, max_length=8
+    )
+    ticket_status = models.ForeignKey(
+        TicketStatus, on_delete=models.SET_NULL, null=True, verbose_name="status"
+    )
+    ticket_category = models.ForeignKey(
+        TicketCategory, on_delete=models.SET_NULL, null=True, verbose_name="category"
     )
     slug = models.SlugField(max_length=8, unique=True, blank=True, null=True)
     user = models.ForeignKey(Customer, on_delete=models.SET_NULL, null=True)

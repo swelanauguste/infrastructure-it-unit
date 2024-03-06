@@ -1,5 +1,5 @@
 <div class="flex-shrink-0 p-3"
-        style="width: 280px; height:fit-content;">
+        style="width: 280px;">
         <a href="/"
                 class="d-flex align-items-center pb-3 mb-3 link-body-emphasis text-decoration-none border-bottom">
                 <span class="fs-5 fw-semibold">IT Unit</span>
@@ -13,38 +13,33 @@
                                 data-bs-toggle="collapse"
                                 data-bs-target="#home-collapse"
                                 aria-expanded="true">
-                                Equipment
+                                IT Unit
                         </button>
                         <div class="collapse show"
                                 id="home-collapse">
                                 <ul
                                         class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
                                         <li><a href="{% url 'computer-list' %}"
-                                                        class="link-body-emphasis d-inline-flex text-decoration-none rounded">Computers</a>
-                                        </li>
+                                                        class="link-body-emphasis d-inline-flex text-decoration-none rounded">Computer
+                                                        systems</a></li>
                                         <li><a href="{% url 'computer-model-list' %}"
                                                         class="link-body-emphasis d-inline-flex text-decoration-none rounded">Computer
-                                                        models</a>
-                                        </li>
+                                                        models</a></li>
                                         <li><a href="{% url 'printer-list' %}"
                                                         class="link-body-emphasis d-inline-flex text-decoration-none rounded">Printers</a>
                                         </li>
                                         <li><a href="{% url 'printer-model-list' %}"
                                                         class="link-body-emphasis d-inline-flex text-decoration-none rounded">Printer
-                                                        models</a>
-                                        </li>
+                                                        models</a></li>
                                         <li><a href="{% url 'monitor-list' %}"
                                                         class="link-body-emphasis d-inline-flex text-decoration-none rounded">Monitors</a>
                                         </li>
                                         <li><a href="{% url 'monitor-model-list' %}"
-                                                        class="link-body-emphasis d-inline-flex text-decoration-none rounded ">Monitor
-                                                        models</a>
-                                        </li>
+                                                        class="link-body-emphasis d-inline-flex text-decoration-none rounded">Monitor
+                                                        models</a></li>
                                         <li><a href="{% url 'microsoft-office-list' %}"
-                                                        class="link-body-emphasis d-inline-flex text-decoration-none rounded ">Microsoft
-                                                        Office
-                                                </a>
-                                        </li>
+                                                        class="link-body-emphasis d-inline-flex text-decoration-none rounded">Microsoft
+                                                        Office</a></li>
                                 </ul>
                         </div>
                 </li>
@@ -54,7 +49,7 @@
                         <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed"
                                 data-bs-toggle="collapse"
                                 data-bs-target="#dashboard-collapse"
-                                aria-expanded="false">
+                                aria-expanded="true">
                                 Users
                         </button>
                         <div class="collapse show"
@@ -64,83 +59,70 @@
                                         <li><a href="{% url 'customer-list' %}"
                                                         class="link-body-emphasis d-inline-flex text-decoration-none rounded">Overview</a>
                                         </li>
+                                        <!-- <li><a href="#" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Weekly</a></li>
+                <li><a href="#" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Monthly</a></li>
+                <li><a href="#" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Annually</a></li> -->
+                                </ul>
+                        </div>
+                </li>
+                <li class="mb-1">
+                        <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed"
+                                data-bs-toggle="collapse"
+                                data-bs-target="#orders-collapse"
+                                aria-expanded="true">
+                                Tickets
+                        </button>
+                        <div class="collapse show"
+                                id="orders-collapse">
+                                <ul
+                                        class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                                        <li><a href="/"
+                                                        class="link-body-emphasis d-inline-flex text-decoration-none rounded">New</a>
+                                        </li>
+                                        <li><a href="{% url 'customer-ticket-list' %}"
+                                                        class="link-body-emphasis d-inline-flex text-decoration-none rounded">My
+                                                        Tickets</a></li>
+
                                         {% if request.user.is_authenticated %}
                                         <li><a href="{% url 'ticket-list' %}"
-                                                        class="link-body-emphasis d-inline-flex text-decoration-none rounded">Tickets</a>
+                                                        class="link-body-emphasis d-inline-flex text-decoration-none rounded">Opened</a>
+                                        </li>
+                                        <li><a href="#"
+                                                        class="link-body-emphasis d-inline-flex text-decoration-none rounded">Closed</a>
                                         </li>
                                         {% endif %}
-                                        <li><a href="/"
-                                                        class="link-body-emphasis d-inline-flex text-decoration-none rounded">New
-                                                        Ticket</a>
-                                        </li>
 
-                                        <li><a href="{% url 'customer-ticket-list' %}"
-                                                        class="link-body-emphasis d-inline-flex text-decoration-none rounded">Find
-                                                        a ticket</a>
-                                        </li>
+                                </ul>
+                        </div>
+                </li>
+                <li class="border-top my-3"></li>
+                <li class="mb-1">
+                        <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed"
+                                data-bs-toggle="collapse"
+                                data-bs-target="#account-collapse"
+                                aria-expanded="false">
+                                Account
+                        </button>
+                        <div class="collapse"
+                                id="account-collapse">
+                                <ul
+                                        class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
 
-                                        <!-- <li><a href="#"
-                            class="link-body-emphasis d-inline-flex text-decoration-none rounded">Weekly</a>
-                    </li>
-                    <li><a href="#"
-                            class="link-body-emphasis d-inline-flex text-decoration-none rounded">Monthly</a>
-                    </li>
-                    <li><a href="#"
-                            class="link-body-emphasis d-inline-flex text-decoration-none rounded">Annually</a> -->
+                                        {% if request.user.is_authenticated %}
+                                        <li><a href="#"
+                                                        class="link-body-emphasis d-inline-flex text-decoration-none rounded">Profile</a>
+                                        </li>
+                                        <li><a href="{% url 'account_logout' %}"
+                                                        class="link-body-emphasis d-inline-flex text-decoration-none rounded">Sign
+                                                        out</a></li>
+                                        {% else %}
+                                        <li><a href="{% url 'account_login' %}"
+                                                        class="link-body-emphasis d-inline-flex text-decoration-none rounded">Sign
+                                                        in</a></li>
+                                        {% endif %}
+
+                                </ul>
+                        </div>
                 </li>
         </ul>
-
-</div>
-<!-- <li class="mb-1">
-    <button
-        class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed"
-        data-bs-toggle="collapse"
-        data-bs-target="#orders-collapse"
-        aria-expanded="false">
-        Tickets
-    </button>
-    <div class="collapse show"
-        id="orders-collapse">
-        <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-            <li><a href="/"
-                    class="link-body-emphasis d-inline-flex text-decoration-none rounded">New</a>
-            </li>
-            <li><a href="{% url 'ticket-list' %}"
-                    class="link-body-emphasis d-inline-flex text-decoration-none rounded">Overview</a>
-            </li>
-            <li><a href="#"
-                            class="link-body-emphasis d-inline-flex text-decoration-none rounded">Completed</a>
-                    </li>
-                    <li><a href="#"
-                            class="link-body-emphasis d-inline-flex text-decoration-none rounded">Returned</a> -->
-<!-- </li>
-        </ul>
-    </div>
-</li> -->
-<!-- <li class="mb-1">
-    <button
-        class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed"
-        data-bs-toggle="collapse"
-        data-bs-target="#account-collapse"
-        aria-expanded="false">
-        Account
-    </button>
-    <div class="collapse"
-        id="account-collapse">
-        <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-            <li><a href="#"
-                    class="link-body-emphasis d-inline-flex text-decoration-none rounded">New...</a>
-            </li>
-            <li><a href="#"
-                    class="link-body-emphasis d-inline-flex text-decoration-none rounded">Profile</a>
-            </li>
-            <li><a href="#"
-                    class="link-body-emphasis d-inline-flex text-decoration-none rounded">Settings</a>
-            </li>
-            <li><a href="#"
-                    class="link-body-emphasis d-inline-flex text-decoration-none rounded">Sign
-                    out</a></li>
-        </ul>
-    </div>
-</li> -->
 </div>

@@ -1,6 +1,20 @@
 from django import forms
 
-from .models import Computer, ComputerComment, MicrosoftOffice, Monitor, Printer
+from .models import (
+    Computer,
+    ComputerComment,
+    ComputerName,
+    MicrosoftOffice,
+    Monitor,
+    Printer,
+)
+
+
+class GetComputerNameForm(forms.ModelForm):
+
+    class Meta:
+        model = ComputerName
+        fields = ["computer_name"]
 
 
 class MicrosoftOfficeUpdateForm(forms.ModelForm):

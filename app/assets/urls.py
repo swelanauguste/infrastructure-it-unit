@@ -31,9 +31,11 @@ from .views import (
     add_computer_comment_view,
     computer_filter_view,
     printer_filter_view,
+    get_next_computer_name_view,
 )
 
 urlpatterns = [
+    path("get_next_computer_name/", get_next_computer_name_view, name="get-next-computer-name"),
     path("computer_filter/", computer_filter_view, name="computer-filter"),
     path("computer_printer/", printer_filter_view, name="printer-list"),
     path("computers/", ComputerListView.as_view(), name="computer-list"),
