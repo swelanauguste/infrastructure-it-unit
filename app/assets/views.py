@@ -37,46 +37,46 @@ from .models import (
 )
 
 
-def get_next_computer_name_view(request):
-    form = GetComputerNameForm()
-    computer_name_prefix = "MCWT"
-    last_computer_name = ComputerName.objects.order_by("-last_used_number").first()
+# def get_next_computer_name_view(request):
+#     form = GetComputerNameForm()
+#     computer_name_prefix = "MCWT"
+#     last_computer_name = ComputerName.objects.order_by("-last_used_number").first()
 
-    if request.method == "POST":
-        form = GetComputerNameForm(request.POST)
-        if form.is_valid():
-            if last_computer_name:
-                # Increment the last used number to get the next sequence
-                next_number = last_computer_name.last_used_number + 1
-            else:
-                # If no computers exist yet, start from 1
-                next_number = 1
+#     if request.method == "POST":
+#         form = GetComputerNameForm(request.POST)
+#         if form.is_valid():
+#             if last_computer_name:
+#                 # Increment the last used number to get the next sequence
+#                 next_number = last_computer_name.last_used_number + 1
+#             else:
+#                 # If no computers exist yet, start from 1
+#                 next_number = 1
 
-            # Combine prefix with next number to get the full computer name
-            next_computer_name = f"{computer_name_prefix}{next_number}"
+#             # Combine prefix with next number to get the full computer name
+#             next_computer_name = f"{computer_name_prefix}{next_number}"
 
-            # Save the new computer name with the incremented number
-            ComputerName.objects.create(
-                computer_name=next_computer_name, last_used_number=next_number
-            )
+#             # Save the new computer name with the incremented number
+#             ComputerName.objects.create(
+#                 computer_name=next_computer_name, last_used_number=next_number
+#             )
 
-            # Redirect or update context as necessary
-            return redirect(
-                "computer-create"
-            )  # Replace 'your_success_url' with your actual URL name
+#             # Redirect or update context as necessary
+#             return redirect(
+#                 "computer-create"
+#             )  # Replace 'your_success_url' with your actual URL name
 
-    else:
-        # If GET request or the form is not valid, show the form again with the next predicted name
-        if last_computer_name:
-            next_number = last_computer_name.last_used_number + 1
-        else:
-            next_number = 1
-        next_computer_name = f"{computer_name_prefix}{next_number}"
-        context = {
-            "form": form,
-            "next_computer_name": next_computer_name,  # Provide the predicted next computer name in context
-        }
-        return render(request, "assets/get_computer_name.html", context)
+#     else:
+#         # If GET request or the form is not valid, show the form again with the next predicted name
+#         if last_computer_name:
+#             next_number = last_computer_name.last_used_number + 1
+#         else:
+#             next_number = 1
+#         next_computer_name = f"{computer_name_prefix}{next_number}"
+#         context = {
+#             "form": form,
+#             "next_computer_name": next_computer_name,  # Provide the predicted next computer name in context
+#         }
+#         return render(request, "assets/get_computer_name.html", context)
 
 
 def computer_filter_view(request):
