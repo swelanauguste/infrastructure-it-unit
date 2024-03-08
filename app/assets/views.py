@@ -263,13 +263,13 @@ class ComputerCreateView(CreateView):
     model = Computer
     form_class = ComputerForm
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context["last_computer_name"] = ComputerName.objects.order_by(
-            "-computer_name"
-        ).first()
-        context["get_computer_name_form"] = GetComputerNameForm
-        return context
+    # def get_context_data(self, **kwargs):
+    #     context = super().get_context_data(**kwargs)
+    #     # context["last_computer_name"] = ComputerName.objects.order_by(
+    #     #     "-computer_name"
+    #     # ).first()
+    #     # context["get_computer_name_form"] = GetComputerNameForm
+    #     return context
 
 
 # class ComputerCreateView(CreateView):
@@ -307,23 +307,23 @@ class ComputerCreateView(CreateView):
     #     context["next_computer_name"] = next_computer_name
     #     return context
 
-    def form_valid(self, form):
-        # This is where you handle what happens after the form is submitted and valid
-        # It's also where you'd typically save your model instance
+    # def form_valid(self, form):
+    #     # This is where you handle what happens after the form is submitted and valid
+    #     # It's also where you'd typically save your model instance
 
-        # First, let's save the Computer instance
-        self.object = form.save(commit=False)
-        self.object.computer_name = form.cleaned_data.get('computer_name', '')
-        self.object.save()
+    #     # First, let's save the Computer instance
+    #     self.object = form.save(commit=False)
+    #     self.object.computer_name = form.cleaned_data.get('computer_name', '')
+    #     self.object.save()
 
-        # Now update the ComputerName instance
-        last_used_number = int(self.object.computer_name.replace("MCWT", ""))  # Extract the number part
-        ComputerName.objects.create(
-            computer_name=self.object.computer_name,
-            last_used_number=last_used_number
-        )
+    #     # Now update the ComputerName instance
+    #     last_used_number = int(self.object.computer_name.replace("MCWT", ""))  # Extract the number part
+    #     ComputerName.objects.create(
+    #         computer_name=self.object.computer_name,
+    #         last_used_number=last_used_number
+    #     )
 
-        return super().form_valid(form)
+    #     return super().form_valid(form)
 
 
 class ComputerUpdateView(UpdateView):
