@@ -40,9 +40,9 @@ INSTALLED_APPS = [
     "technicians",
     "django_filters",
     "pwa",
-    # "allauth",
-    # "allauth.account",
-    # "allauth.socialaccount",
+    "allauth",
+    "allauth.account",
+    "allauth.socialaccount",
 ]
 
 MIDDLEWARE = [
