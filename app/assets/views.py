@@ -16,7 +16,7 @@ from .filters import ComputerFilter, PrinterFilter
 from .forms import (
     CommentCreateForm,
     ComputerForm,
-    GetComputerNameForm,
+    # GetComputerNameForm,
     MicrosoftOfficeUpdateForm,
     MonitorForm,
     PrinterForm,
@@ -25,7 +25,7 @@ from .models import (
     Computer,
     ComputerComment,
     ComputerModel,
-    ComputerName,
+    # ComputerName,
     ComputerType,
     Maker,
     MicrosoftOffice,

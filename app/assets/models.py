@@ -3,23 +3,23 @@ from django.db import models
 from django.shortcuts import reverse
 
 
-class ComputerName(models.Model):
-    computer_name = models.CharField(max_length=100, unique=True)
-    last_used_number = models.IntegerField(default=0)
+# class ComputerName(models.Model):
+#     computer_name = models.CharField(max_length=100, unique=True)
+#     last_used_number = models.IntegerField(default=0)
 
-    def save(self, *args, **kwargs):
-        if not self.pk:  # Checking if the instance is not yet saved
-            computer_name_prefix = 'MCWT'
-            last_computer_name = ComputerName.objects.order_by("-last_used_number").first()
-            if last_computer_name:
-                self.last_used_number = last_computer_name.last_used_number + 1
-            else:
-                self.last_used_number = 1  # Start from 1 if no records exist
-            self.computer_name = f"{computer_name_prefix}{self.last_used_number}"
-        super().save(*args, **kwargs)
+#     def save(self, *args, **kwargs):
+#         if not self.pk:  # Checking if the instance is not yet saved
+#             computer_name_prefix = 'MCWT'
+#             last_computer_name = ComputerName.objects.order_by("-last_used_number").first()
+#             if last_computer_name:
+#                 self.last_used_number = last_computer_name.last_used_number + 1
+#             else:
+#                 self.last_used_number = 1  # Start from 1 if no records exist
+#             self.computer_name = f"{computer_name_prefix}{self.last_used_number}"
+#         super().save(*args, **kwargs)
 
-    def __str__(self):
-        return self.computer_name
+#     def __str__(self):
+#         return self.computer_name
 
 
 class Project(models.Model):
