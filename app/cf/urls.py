@@ -9,7 +9,7 @@ urlpatterns = [
     path("customers", include("customers.urls")),
     path("", include("tickets.urls")),
     path("", include("pwa.urls")),
-    path("accounts/", include("allauth.urls")),
+    # path("accounts/", include("allauth.urls")),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
